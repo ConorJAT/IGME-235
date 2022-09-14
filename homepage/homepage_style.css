@@ -1,3 +1,6 @@
+/* Page Background Color */
+body {background-color: #fcf4e4;}
+
 /* Link Colors */
 a:link { color: #5094e2}
 
@@ -6,3 +9,8 @@ a:visited { color: #17b890}
 a:hover { color: #284977}
 
 a:active { color: #091c35}
+
+#floating { 
+    float: left; 
+    margin: 1em;
+}
