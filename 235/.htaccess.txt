@@ -1,0 +1,2 @@
+ErrorDocument 404 /ctr9664/235/error/error.html
+DirectoryIndex noterror.html
