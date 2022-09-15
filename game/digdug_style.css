@@ -1,0 +1,59 @@
+main {
+    border: 1px solid black;   
+}
+
+main, header, footer {
+    background-color:#fffad0;
+    margin: 0 auto;
+    width: 80vw;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+body {
+    background-color: rgb(39, 19, 19);
+    background-image: url("images/pooka.png");
+    font-family: Arial, sans-serif;
+    }
+
+p {
+    margin-left: 24px;
+    }
+
+h1 { 
+    color:red;
+    font-family: sans-serif;
+    border-bottom: 1px solid blue;
+    font-family: Cabin, sans-serif; 
+    }
+
+h2 {
+    color:#ff8025;
+    font-family: Cabin, sans-serif;
+    background-color: teal;
+    }
+
+blockquote { 
+    background-color: #fcc898;
+    padding: 1rem;
+    }
+
+a:link { color: #FB5E07; } a:visited { color: #2D1C5D; }
+
+.over {
+    float: right; margin: 0 20px;
+    }
+
+#left{
+    margin: 0 20px;
+}
+
+/* * {
+    border: 1px solid gray;
+    } */
+
+footer a {
+    background-color: white;
+    }
