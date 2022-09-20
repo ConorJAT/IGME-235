@@ -1,7 +1,48 @@
-/* Do everything in this file */
-
-h2 { border-bottom: 1px solid red;}
+header, main, footer {
+    width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 figure {
-    float: right;
+    max-width: 650px;
+    /*overflow: hidden;*/
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+figure>img {
+    width: 100%;
+}
+
+#tetlist {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+div {
+    flex: 1 1 420px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+span { 
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+div>img { width: 60%; }
+
+div.tet.long>img { width: 80%; }
+
+div.tet.square>img {width: 40%; }
+
+.aliases {
+    text-align: left;
+    margin: 1em;
 }

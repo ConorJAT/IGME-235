@@ -1,16 +1,88 @@
-/* Page Background Color */
-body {background-color: #fcf4e4;}
+/* Importing Custom Fonts */
+@font-face {
+    font-family: Kanit;
+    src: url(fonts/Kanit-Regular.ttf);
+}
+
+@font-face {
+    font-family: Ubuntu;
+    src: url(fonts/Ubuntu-Regular.ttf);
+}
+
+
+/* Page Background Color & Image */
+body {
+    background-color: #1c1c1d;
+    background-image: url("images/pokeball_dec.png");
+}
+
+
+/* Webpage Margins */
+main, header, footer {
+    margin: 0 auto;
+    margin-bottom: 10px;
+    width: 70vw;
+
+    background-color: #b9d6cf;
+    border: 5px solid rgb(10, 197, 150);
+}
+
+
+/* Heading Presets */
+h1, h2{
+    
+    font-family: Kanit, Verdana, sans-serif;
+}
+
+h1 {
+    font-size: 42px;
+    color: #13315c;
+}
+
+h2 {
+    font-size: 30px;
+    color: #367ac9;
+}
+
+
+/* Main Body Text */
+p {
+    padding: 1rem;
+}
+
+.mainText {
+    font-family: Ubuntu, Arial, sans-serif;
+    font-size: 19px;
+}
+
+.shiftText {
+    padding-left: 1rem;
+}
+
+li, a{
+    padding-bottom: 1rem;
+}
+
 
 /* Link Colors */
 a:link { color: #5094e2}
 
 a:visited { color: #17b890}
 
-a:hover { color: #284977}
+a:hover { color: #37629c}
 
 a:active { color: #091c35}
 
-#floating { 
+
+/* Floating Images */
+#floatLeft { 
     float: left; 
     margin: 1em;
+
+   border: 2px solid rgb(10, 197, 150); 
+}
+
+#floatRight {
+    float: right;
+    margin: 5px;
 }

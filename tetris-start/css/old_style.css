@@ -1,0 +1,40 @@
+/* Do everything in this file */
+
+body {
+    margin: 0 auto;
+    width: 80vw;
+}
+
+h2, h3 { border-bottom: 1px solid red;}
+
+figure {
+    float: right;
+    width: 40vw;
+    margin: 1rem;
+}
+
+figure>img { width: 40vw; }
+
+h2 { clear: right; }
+
+div {
+    float: left;
+    /*width: 50vw;*/
+    width: 512px;
+    /*: 30rem;*/
+    border: 1px solid black;
+}
+
+div>img{ width: 512px;}
+
+footer {
+    clear: left;
+
+    /*position: relative;
+    bottom: 500px;
+
+    position: absolute;*/
+
+    position: fixed;
+    z-index: -100;
+}
