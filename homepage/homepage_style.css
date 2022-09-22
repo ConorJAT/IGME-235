@@ -57,6 +57,7 @@ p {
 
 .shiftText {
     padding-left: 1rem;
+    clear: left;
 }
 
 li, a{
