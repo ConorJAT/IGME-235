@@ -1,0 +1,7 @@
+#content {
+    display: flex;
+}
+
+.region {
+    border: 1px solid black;
+}
