@@ -1,7 +1,17 @@
+header, main {
+    width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #content {
     display: flex;
 }
 
 .region {
     border: 1px solid black;
+}
+
+.info {
+    text-align: center;
 }
