@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materialize Carousel</title>
+
+    <!-- STEP #3 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- STEP #3 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+<body>
+    <!-- STEP #10 -->
+    <div class="carousel">
+        <a class="carousel-item" href="#"><img src="https://via.placeholder.com/500x300/0000FF/808080?text=Slide1"></a>
+        <a class="carousel-item" href="#"><img src="https://via.placeholder.com/500x300/00AAFF/808080?text=Slide2"></a>
+        <a class="carousel-item" href="#"><img src="https://via.placeholder.com/500x300/00FFAA/000000?text=Slide3"></a>
+        <a class="carousel-item" href="#"><img src="https://via.placeholder.com/500x300/AADD00/000000?text=Slide4"></a>
+        <a class="carousel-item" href="#"><img src="https://via.placeholder.com/500x300/22FADA/000000?text=Slide5"></a>
+    </div>
+
+    <!-- STEP #11 -->
+    <script>
+        var elems = document.querySelectorAll('.carousel');
+        var instances = M.Carousel.init(elems);                
+    </script>
+
+
+    <!-- STEP #12 - Carousel Slider -->
+    <!--<div class="carousel-slider">
+        <a class="carousel-item" href="#one!"><img src="https://via.placeholder.com/500x300/0000FF/808080?text=Slide1"></a>
+        <a class="carousel-item" href="#two!"><img src="https://via.placeholder.com/500x300/0000FF/808080?text=Slide2"></a>
+        <a class="carousel-item" href="#three!"><img src="https://via.placeholder.com/500x300/0000FF/808080?text=Slide3"></a>
+        <a class="carousel-item" href="#four!"><img src="https://via.placeholder.com/500x300/0000FF/808080?text=Slide4"></a>
+    </div>
+
+    <script>
+        var elems = document.querySelectorAll('.carousel-slider');
+        var instances = M.Carousel.init(elems, options);
+        var instance = M.Carousel.init({fullWidth: true});
+    </script>-->
+    
+</body>
+
+</html>
