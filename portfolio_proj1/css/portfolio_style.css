@@ -15,6 +15,9 @@ h1 {
     font-weight: 300;
     font-size: 24px;
     color: white;
+
+    float: left;
+    margin: 0 auto;
 }
 
 h2 {
@@ -37,7 +40,7 @@ h2 {
 
 #main_content{
     display: grid;
-    grid-template-rows: 50px 200px repeat(5, 200px) 160px;
+    grid-template-rows: 100px 160px repeat(5, 200px) 160px;
     grid-template-areas: "navbar"
                          "header"
                          "about"
@@ -76,13 +79,64 @@ h2 {
 }
 
 
+
+ul.menu{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin: 0;
+}
+
+.menu a, #nav_title{
+    display: block;
+    background: gray;
+    padding: 10px;
+
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+#nav_title{
+    font-weight: 700;
+    max-width: 815px;
+}
+
+.menu a:hover {
+    background: rgb(31, 31, 48);
+}
+
+.menu li {
+    width: 33.333%;
+}
+
+ul.menu ul li {
+    width: 100%;
+}
+
+ul.menu ul {
+    list-style: none;
+    padding: 0;
+    display: none;
+}
+
+ul.menu li:hover ul {
+    list-style: none;
+    display: block;
+}
+
+
+
 /* Grid Styles (Desktop) */
 
 @media screen and (min-width: 880px) {
     #main_content{
         display: grid;
         grid-template-columns: 33% 34% 33%;
-        grid-template-rows: 100px 300px 400px 100px 500px 160px;
+        grid-template-rows: 50px 260px 400px 100px 500px 160px;
         grid-template-areas: "navbar   navbar   navbar"
                              "header   header   header"
                              "about    primary  primary"
@@ -140,18 +194,25 @@ h2 {
         margin: 0;
         padding: 0;
         display: flex;
+        margin: 0;
     }
 
-    .menu a {
+    .menu a, #nav_title{
         display: block;
         background: gray;
         padding: 10px;
 
         font-family: 'Roboto', 'Arial', sans-serif;
-        font-weight: 700;
+        font-weight: 300;
         font-size: 20px;
         color: white;
         text-decoration: none;
+    }
+
+    #nav_title{
+        font-weight: 700;
+        width: 25%;
+        float: left;
     }
 
     .menu a:hover {
@@ -159,7 +220,7 @@ h2 {
     }
 
     .menu li {
-        width: 22%;
+        width: 35%;
     }
 
     ul.menu ul li {
@@ -175,11 +236,6 @@ h2 {
     ul.menu li:hover ul {
         list-style: none;
         display: block;
-    }
-
-    .menu .submenu>a:after {
-        content: "+";
-        padding-left: 5px;
     }
 }
 
@@ -228,5 +284,13 @@ footer{
 }
 
 nav{
-    background-color: black;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    z-index: 5;
+}
+
+footer{
+    background-color: gray;
 }
