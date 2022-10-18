@@ -39,7 +39,7 @@ h2 {
 
 #main_content{
     display: grid;
-    grid-template-rows: 40px 4fr 4fr 3fr 3fr 3fr 40px;
+    grid-template-rows: 200px 4fr 4fr 3fr 3fr 3fr 40px;
     grid-template-areas: "header"
                          "about"
                          "primary"
@@ -56,15 +56,15 @@ h2 {
 @media screen and (min-width: 880px) {
     #main_content{
         display: grid;
-        grid-template-columns: 36% 35% 36%;
-        grid-template-rows: 40px 400px 100px 500px 40px;
+        grid-template-columns: 33% 34% 33%;
+        grid-template-rows: 300px 400px 100px 500px 160px;
         grid-template-areas: "header   header   header"
                              "about    primary  primary"
                              "about    sub2     sub3"
                              "sub1     sub2     sub3"
                              "footer   footer   footer";
 
-        max-width: 1280px;
+        max-width: 1360px;
         margin: 0 auto;
     }
     
