@@ -37,8 +37,9 @@ h2 {
 
 #main_content{
     display: grid;
-    grid-template-rows: 200px 4fr 4fr 3fr 3fr 3fr 160px;
-    grid-template-areas: "header"
+    grid-template-rows: 50px 200px repeat(5, 200px) 160px;
+    grid-template-areas: "navbar"
+                         "header"
                          "about"
                          "primary"
                          "sub1"
@@ -81,8 +82,9 @@ h2 {
     #main_content{
         display: grid;
         grid-template-columns: 33% 34% 33%;
-        grid-template-rows: 300px 400px 100px 500px 160px;
-        grid-template-areas: "header   header   header"
+        grid-template-rows: 100px 300px 400px 100px 500px 160px;
+        grid-template-areas: "navbar   navbar   navbar"
+                             "header   header   header"
                              "about    primary  primary"
                              "about    sub2     sub3"
                              "sub1     sub2     sub3"
@@ -130,10 +132,63 @@ h2 {
         margin-left: 25px;
         margin-top: 10px;
     }
+
+
+    /* Navbar Styles */
+    ul.menu{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .menu a {
+        display: block;
+        background: gray;
+        padding: 10px;
+
+        font-family: 'Roboto', 'Arial', sans-serif;
+        font-weight: 700;
+        font-size: 20px;
+        color: white;
+        text-decoration: none;
+    }
+
+    .menu a:hover {
+        background: rgb(31, 31, 48);
+    }
+
+    .menu li {
+        width: 22%;
+    }
+
+    ul.menu ul li {
+        width: 100%;
+    }
+
+    ul.menu ul {
+        list-style: none;
+        padding: 0;
+        display: none;
+    }
+
+    ul.menu li:hover ul {
+        list-style: none;
+        display: block;
+    }
+
+    .menu .submenu>a:after {
+        content: "+";
+        padding-left: 5px;
+    }
 }
 
 
 /* Grid Areas */
+
+nav{
+    grid-area: navbar;
+}
 
 header{
     grid-area: header;
@@ -172,17 +227,6 @@ footer{
     border: 2px solid black;
 }
 
-#about {
-}
-
-#primary {
-}
-
-#sub-1 {
-}
-
-#sub-2 {
-}
-
-#sub-3 {
+nav{
+    background-color: black;
 }
