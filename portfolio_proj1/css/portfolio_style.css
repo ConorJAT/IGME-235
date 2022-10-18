@@ -1,0 +1,190 @@
+body {
+    background-color: rgb(66, 66, 66);
+}
+
+/* Header Styles */
+
+header, main {
+    width: 90vw;
+}
+
+header{
+    margin-left: 12px;
+}
+
+h1 {
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    color: white;
+}
+
+h2 {
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: white;
+    
+}
+
+#publish {
+    font-family: 'Alkalami', 'Times New Roman', serif;
+    font-weight: 300;
+    font-size: 10px;
+    color: white;
+}
+
+
+/* Grid Styles (Mobile) */
+
+#main_content{
+    display: grid;
+    grid-template-rows: 40px 4fr 4fr 3fr 3fr 3fr 40px;
+    grid-template-areas: "header"
+                         "about"
+                         "primary"
+                         "sub1"
+                         "sub2"
+                         "sub3"
+                         "footer";
+    height: 100vh;
+}
+
+
+/* Grid Styles (Desktop) */
+
+@media screen and (min-width: 880px) {
+    #main_content{
+        display: grid;
+        grid-template-columns: 36% 35% 36%;
+        grid-template-rows: 40px 400px 100px 500px 40px;
+        grid-template-areas: "header   header   header"
+                             "about    primary  primary"
+                             "about    sub2     sub3"
+                             "sub1     sub2     sub3"
+                             "footer   footer   footer";
+
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+    
+    h2 {
+        font-family: 'Roboto', 'Arial', sans-serif;
+        font-weight: 700;
+        font-size: 54px;
+        color: white;
+    }
+
+    #publish {
+        font-family: 'Alkalami', 'Times New Roman', serif;
+        font-weight: 300;
+        font-size: 12px;
+        color: white;
+    }
+
+    .info {
+        font-family: 'Roboto', 'Arial', sans-serif;
+        font-weight: 300;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        
+        position: absolute;
+        bottom: 0;
+    
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+    
+    .source {
+        font-family: 'Roboto', 'Arial', sans-serif;
+        font-weight: 700;
+        font-size: 12px;
+        color: white;
+        text-align: left;
+    
+        margin-left: 25px;
+        margin-top: 10px;
+    }
+}
+
+
+/* Grid Areas */
+
+header{
+    grid-area: header;
+}
+
+#about{
+    grid-area: about;
+}
+
+#primary{
+    grid-area: primary;
+}
+
+#sub-1{
+    grid-area: sub1;
+}
+
+#sub-2{
+    grid-area: sub2;
+}
+
+#sub-3{
+    grid-area: sub3;
+}
+
+footer{
+    grid-area: footer;
+}
+
+
+/* Grid Area Styles */
+
+#about, #primary, #sub-1, #sub-2, #sub-3 {
+    margin: 10px;
+    position: relative;
+    border: 2px solid black;
+}
+
+#about {
+}
+
+#primary {
+}
+
+#sub-1 {
+}
+
+#sub-2 {
+}
+
+#sub-3 {
+}
+
+.info {
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    
+    position: absolute;
+    bottom: 0;
+
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.source {
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    color: white;
+    text-align: left;
+
+    margin-left: 25px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
