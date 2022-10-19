@@ -291,6 +291,14 @@ nav{
     z-index: 5;
 }
 
+#links a:link { color: white; }
+
+#links a:visited { color: blue; }
+
+#links a:hover { color: lime; }
+
+#links a:active { color: green; }
+
 footer{
     background-color: gray;
     font-family: 'Roboto', 'Arial', sans-serif;
@@ -298,3 +306,4 @@ footer{
     font-size: 20px;
     color: white;
 }
+
