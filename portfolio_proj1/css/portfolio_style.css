@@ -4,6 +4,7 @@ body {
     margin: 0 auto;
 }
 
+
 /* Header Styles */
 
 header, footer {
@@ -13,7 +14,7 @@ header, footer {
 h1 {
     font-family: 'Roboto', 'Arial', sans-serif;
     font-weight: 300;
-    font-size: 24px;
+    font-size: 32px;
     color: white;
 
     float: left;
@@ -23,7 +24,7 @@ h1 {
 h2 {
     font-family: 'Roboto', 'Arial', sans-serif;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 36px;
     color: white;
     
 }
@@ -40,7 +41,7 @@ h2 {
 
 #main_content{
     display: grid;
-    grid-template-rows: 100px 160px repeat(5, 200px) 160px;
+    grid-template-rows: 100px 180px repeat(5, 200px) 160px;
     grid-template-areas: "navbar"
                          "header"
                          "about"
@@ -79,6 +80,7 @@ h2 {
 }
 
 
+/* Navbar Styles */
 
 ul.menu{
     list-style: none;
@@ -129,14 +131,13 @@ ul.menu li:hover ul {
 }
 
 
-
 /* Grid Styles (Desktop) */
 
 @media screen and (min-width: 880px) {
     #main_content{
         display: grid;
         grid-template-columns: 33% 34% 33%;
-        grid-template-rows: 50px 260px 400px 100px 500px 160px;
+        grid-template-rows: 50px 300px 400px 100px 500px 160px;
         grid-template-areas: "navbar   navbar   navbar"
                              "header   header   header"
                              "about    primary  primary"
@@ -151,7 +152,7 @@ ul.menu li:hover ul {
     h2 {
         font-family: 'Roboto', 'Arial', sans-serif;
         font-weight: 700;
-        font-size: 54px;
+        font-size: 64px;
         color: white;
     }
 
@@ -189,6 +190,7 @@ ul.menu li:hover ul {
 
 
     /* Navbar Styles */
+
     ul.menu{
         list-style: none;
         margin: 0;
@@ -306,4 +308,3 @@ footer{
     font-size: 20px;
     color: white;
 }
-
