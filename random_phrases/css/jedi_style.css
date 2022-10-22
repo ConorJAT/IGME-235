@@ -1,0 +1,214 @@
+body{
+    width: 95vw;
+    margin: 0 auto;
+}
+
+div#content{
+    max-width: 720px;
+    max-height: 720px;
+
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 1px solid black;
+
+    position: relative;
+}
+
+#background{
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+}
+
+header{
+    position: absolute;
+    top: 10px;
+
+    width: 100%;
+
+    background-color: #b66342cc;
+}
+
+h1{
+    text-align: center;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    font-family: 'Oxygen', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: white;
+}
+
+#phrase{
+    margin: 10px;
+
+    position: absolute;
+    bottom: 220px;
+
+    font-family: 'Oxygen', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: white;
+}
+
+#signature{
+    margin: 10px;
+    
+    position: absolute;
+    bottom: 0; 
+
+    font-family: 'Oxygen', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: white;
+}
+
+#button{
+    position: absolute;
+    bottom: 120px;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn.btn-primary.btn-lg{
+    width: 120px;
+    height: 30px;
+
+    display: block;
+
+    background-color: #b66342cc;
+    border-color: #a0573b;
+
+    font-weight: 700;
+    font-size: 12px;
+}
+
+@media screen and (min-width: 450px) {
+    h1{
+        text-align: center;
+    
+        margin-top: 10px;
+        margin-bottom: 10px;
+    
+        font-family: 'Oxygen', Arial, sans-serif;
+        font-weight: 700;
+        font-size: 32px;
+        color: white;
+    }
+    
+    #phrase{
+        margin: 10px;
+    
+        position: absolute;
+        bottom: 220px;
+    
+        font-family: 'Oxygen', Arial, sans-serif;
+        font-weight: 400;
+        font-size: 18px;
+        color: white;
+    }
+
+    #signature{
+        margin: 10px;
+        
+        position: absolute;
+        bottom: 0; 
+    
+        font-family: 'Oxygen', Arial, sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        color: white;
+    }
+
+    #button{
+        position: absolute;
+        bottom: 120px;
+
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .btn.btn-primary.btn-lg{
+        width: 160px;
+        height: 40px;
+
+        display: block;
+
+        background-color: #b66342cc;
+        border-color: #a0573b;
+
+        font-weight: 700;
+        font-size: 18px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    h1{
+        text-align: center;
+    
+        margin-top: 10px;
+        margin-bottom: 10px;
+    
+        font-family: 'Oxygen', Arial, sans-serif;
+        font-weight: 700;
+        font-size: 48px;
+        color: white;
+    }
+    
+    #phrase{
+        margin: 10px;
+    
+        position: absolute;
+        bottom: 220px;
+    
+        font-family: 'Oxygen', Arial, sans-serif;
+        font-weight: 400;
+        font-size: 28px;
+        color: white;
+    }
+
+    #signature{
+        margin: 10px;
+        
+        position: absolute;
+        bottom: 0; 
+    
+        font-family: 'Oxygen', Arial, sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        color: white;
+    }
+
+    #button{
+        position: absolute;
+        bottom: 120px;
+
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .btn.btn-primary.btn-lg{
+        width: 200px;
+        height: 60px;
+
+        display: block;
+
+        background-color: #b66342cc;
+        border-color: #a0573b;
+
+        font-weight: 700;
+        font-size: 24px;
+    }
+}
