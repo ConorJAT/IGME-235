@@ -34,7 +34,7 @@
 </head>
 
 
-<body>
+<body onload="displayQuote()">
     <div id="content">
 
         <header>
@@ -51,7 +51,30 @@
         
         <p id="signature">Conor Race - IGME 235 - 2221</p>
 
-    </div>   
+    </div>
+    
+    <script>
+        "use script";
+
+        let quote = document.querySelector("#phrase");
+        let button = document.querySelector("button");
+        
+        let randNum = 0;
+        const phrases = ["\"Do. Or do not. There is no try.\" - Yoda",
+                         "\"Concentrate on the moment. Feel, don't think. Trust your instincts.\" - Qui Gon Ginn",
+                         "\"This family will stand by you no matter what you choose.\" - Kanan Jarrus",
+                         "\"You don't have to carry a sword to be powerful. Some leaders' strength is inspiring others.\" - Ahsoka Tano",
+                         "\"A great leap forward often requires taking two steps back.\" - Obi Wan Kenobi",
+                         "\"What about the droid attack on the Wookies?\" - Ki Adi Mundi"];
+
+        button.addEventListener("click", displayQuote);
+
+        function displayQuote(){
+            randNum = Math.floor(Math.random() * 6);
+
+            quote.innerHTML = phrases[randNum];  
+        }
+    </script>
 </body>
 
 </html>

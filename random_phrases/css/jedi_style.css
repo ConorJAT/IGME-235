@@ -89,6 +89,14 @@ h1{
     font-size: 12px;
 }
 
+.btn.btn-primary.btn-lg:hover{
+    background-color: #754735cc;
+}
+
+.btn.btn-primary.btn-lg:active{
+    background-color: #33251fcc;
+}
+
 @media screen and (min-width: 450px) {
     h1{
         text-align: center;
