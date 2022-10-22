@@ -65,6 +65,30 @@ h1{
     color: white;
 }
 
+#button{
+    position: absolute;
+    bottom: 120px;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn.btn-primary.btn-lg{
+    width: 120px;
+    height: 30px;
+
+    display: block;
+
+    background-color: #b66342cc;
+    border-color: #a0573b;
+
+    font-weight: 700;
+    font-size: 12px;
+}
+
 @media screen and (min-width: 450px) {
     h1{
         text-align: center;
@@ -100,6 +124,30 @@ h1{
         font-weight: 400;
         font-size: 16px;
         color: white;
+    }
+
+    #button{
+        position: absolute;
+        bottom: 120px;
+
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .btn.btn-primary.btn-lg{
+        width: 160px;
+        height: 40px;
+
+        display: block;
+
+        background-color: #b66342cc;
+        border-color: #a0573b;
+
+        font-weight: 700;
+        font-size: 18px;
     }
 }
 
@@ -138,5 +186,29 @@ h1{
         font-weight: 400;
         font-size: 16px;
         color: white;
+    }
+
+    #button{
+        position: absolute;
+        bottom: 120px;
+
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .btn.btn-primary.btn-lg{
+        width: 200px;
+        height: 60px;
+
+        display: block;
+
+        background-color: #b66342cc;
+        border-color: #a0573b;
+
+        font-weight: 700;
+        font-size: 24px;
     }
 }
