@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>DOM-3</title>
+	<style>
+		body{border:1px solid gray;}
+		p b{transform: rotate(20deg)}
+	</style>
+</head>
+<body>
+<h1>My Page</h1>
+<h2>Info</h2>
+<h2>Pictures</h2>
+<h2>More Info</h2>
+<p>Blah <b>Blah</b> Blah</p>
+<p>Blah <b>Blah</b> Blah</p>
+<p id="lastParagraph">Blah <b>Blah</b> Blah</p>
+<footer>Copyright &copy; <b>20XX</b></footer>
+<script>
+	"use strict"; 
+
+    // Add your own code here.
+	let h1 = document.querySelector("h1");
+    let h2 = document.querySelectorAll("h2");
+    let body = document.body;
+
+    h1.innerHTML = "My UFO Page";
+    h2[0].innerHTML = "My UFO Info";
+    h2[1].innerHTML = "My UFO Pictures";
+    h2[2].innerHTML = "";
+
+
+	</script>
+</body>
+</html>
