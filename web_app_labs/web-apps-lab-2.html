@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>DOM-3</title>
+	<title>Web Apps Lab #2</title>
 	<style>
 		body{border:1px solid gray;}
 		p b{transform: rotate(20deg)}
@@ -22,7 +22,9 @@
 
     // Add your own code here.
 	let h1 = document.querySelector("h1");
+	let foot = document.querySelector("footer");
     let h2 = document.querySelectorAll("h2");
+	let text = document.querySelectorAll("p");
     let body = document.body;
 
     h1.innerHTML = "My UFO Page";
@@ -30,6 +32,21 @@
     h2[1].innerHTML = "My UFO Pictures";
     h2[2].innerHTML = "";
 
+	body.style.fontFamily = "sans-serif";
+	body.style.color =  "#852925";
+
+	text[0].innerHTML = "Report your UFO sightings here: <a href='http://www.nuforc.org'>http://www.nuforc.org</a>";
+	text[0].style.color = "green";
+	text[0].style.fontWeight = "bold";
+	text[0].style.fontSize = "2em";
+	text[0].style.textTransform = "uppercase";
+	text[0].style.textShadow = "3px 2px #A44";
+
+	text[1].innerHTML = "";
+
+	text[2].innerHTML = "<img src='images/ufo.png' alt='UFO Sighting'>";
+
+	foot.innerHTML = "&copy; 2022 Conor Race"
 
 	</script>
 </body>
