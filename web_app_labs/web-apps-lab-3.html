@@ -58,13 +58,29 @@ for (let game of games){
 // Optional - Can you figure out how to pull both the key AND the value
 // from the `links` object literal?
 let links = {
-	"RIT" : "http://www.rit.edu",
-	"RWAG" : "https://www.facebook.com/RWAGclub",
-	"New Media Club" : "http://newmediaclub.cias.rit.edu"
+	"YouTube" : "https://www.youtube.com/channel/UCPybAT6SUljrRrozRYKGyKQ",
+	"Steam" : "https://store.steampowered.com/",
+	"Itch.Io" : "https://itch.io/"
 }
 
 let myLinks = document.querySelector('ol[id="linksList"]');
 
+for (let key in links){
+    let newItem = document.createElement("li");
+
+    let itemLink = document.createElement("a");
+
+    let textLink = document.createTextNode(key);
+
+    itemLink.appendChild(textLink);
+
+    itemLink.title = key;
+    itemLink.href = links[key];
+
+    newItem.appendChild(itemLink);
+
+    myLinks.appendChild(newItem);
+}
 
 </script>
 </body>
