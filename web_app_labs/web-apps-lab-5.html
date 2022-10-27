@@ -45,16 +45,16 @@ let submitButton = document.querySelector('button');
 let titleText = document.querySelector('legend');
 let infoBox = document.querySelector('#info');
 
-function chooseColor(){
+function chooseColor(e){
     let color = e.target.value;
 
     infoBox.innerHTML = "You have selected: " + color;
 }
 
-function confirmColor(){
+function confirmColor(e){
     for(let button of colorButtons){
         if(button.checked){
-            let color = button.target.value;
+            let color = button.value;
 
             infoBox.innerHTML = "Your final choice is " + color + "!";
 
@@ -63,9 +63,9 @@ function confirmColor(){
     }
 }
 
-for(let button of colorButtons) {button.addEventListener("change", chooseColor());}
+for(let button of colorButtons) {button.addEventListener("change", chooseColor);}
 
-submitButton.addEventListener("click", confirmColor());
+submitButton.addEventListener("click", confirmColor);
 
 </script>
 </body>
