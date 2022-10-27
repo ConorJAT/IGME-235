@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Web Apps-5</title>
+	<title>Web Apps Lab #5</title>
 	<style>
 		body{
 			font-family:sans-serif;
@@ -38,7 +38,35 @@
 </div>
 
 <script>
+
 /* Write your code here! */
+let colorButtons = document.querySelectorAll('input[name="colorGroup"]');
+let submitButton = document.querySelector('button');
+let titleText = document.querySelector('legend');
+let infoBox = document.querySelector('#info');
+
+function chooseColor(){
+    let color = e.target.value;
+
+    infoBox.innerHTML = "You have selected: " + color;
+}
+
+function confirmColor(){
+    for(let button of colorButtons){
+        if(button.checked){
+            let color = button.target.value;
+
+            infoBox.innerHTML = "Your final choice is " + color + "!";
+
+            titleText.style.color = color;
+        }
+    }
+}
+
+for(let button of colorButtons) {button.addEventListener("change", chooseColor());}
+
+submitButton.addEventListener("click", confirmColor());
+
 </script>
 </body>
 </html>
