@@ -30,7 +30,7 @@ What is your favorite color ->
 // declare some constants
 const nameField = document.querySelector("#nameField");
 const colorSelect = document.querySelector("#colorSelect");
-const prefix = "abc1234-"; // change 'abc1234' to your banjo id
+const prefix = "ctr9664-"; // change 'abc1234' to your banjo id
 const nameKey = prefix + "name"
 const colorKey = prefix + "color";
 
@@ -48,12 +48,13 @@ if (storedName){
 // if we find a previously set color value, display it
 if (storedColor){
 	colorSelect.querySelector(`option[value='${storedColor}']`).selected = true;
+    document.body.style.backgroundColor = storedColor;
 }
 
 /* This stuff happens later when the user does something */
 // when the user changes their favorites, update localStorage
 nameField.onchange = e=>{ localStorage.setItem(nameKey, e.target.value); };
-colorSelect.onchange = e=>{ localStorage.setItem(colorKey, e.target.value); };
+colorSelect.onchange = e=>{ localStorage.setItem(colorKey, e.target.value); document.body.style.background = colorSelect.value; };
 
 
 </script>
