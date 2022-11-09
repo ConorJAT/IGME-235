@@ -69,11 +69,7 @@ function dataLoaded(e){
 	// G.) Turn the text into a parsable JavaScript object.
 	let obj = JSON.parse(xhr.responseText);
 
-	// H.) If there are no results, print a message and return.
-	if (!obj.data || obj.data == null){
-		document.querySelector("#status").innerHTML = "<br>No results found for '" + displayTerm + "'</br>";
-		return;  // Bail Out!
-	}
+
 }
 
 function dataError(e){
