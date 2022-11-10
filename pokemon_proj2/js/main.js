@@ -17,6 +17,7 @@ function searchButtonClicked(){
     // C.) Parse the user entered term we wish to search.
 	let term = document.querySelector("#searchterm").value;
 	displayTerm = term;
+	term = term.toLowerCase();
 
 	// D.) Remove any leading and trailing spaces.
 	term = term.trim();
@@ -87,12 +88,12 @@ function dataLoaded(e){
 	// I.) Build a <div> to hold the result.
 	// --- Es6 String Templating ---
 	let line = `<div class='result'><h2>${name}</h2>`;
-	line += `<span>Pokedex ID: ${dexNum}</span>`;
+	line += `<p>Pokedex ID: ${dexNum}</p>`;
 	if (types.length == 1){
-		line += `<span>Typing: ${types[0]}</span>`;
+		line += `<p>Typing: ${types[0]}</p>`;
 	}
 	else if (types.length == 2){
-		line += `<span>Typing: ${types[0]} & ${types[1]}</span>`;
+		line += `<p>Typing: ${types[0]} & ${types[1]}</p>`;
 	}
 	line += `<img src='${smallURL}' title='${name}'/></div>`;
 
