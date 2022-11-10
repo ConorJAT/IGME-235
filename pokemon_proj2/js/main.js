@@ -59,6 +59,8 @@ function getData(url){
 
 // Callback Functions:
 
+let obj;
+
 function dataLoaded(e){
     // E.) Event.target is the xhr object.
 	let xhr = e.target;
@@ -67,9 +69,38 @@ function dataLoaded(e){
 	console.log(xhr.responseText);
 
 	// G.) Turn the text into a parsable JavaScript object.
-	let obj = JSON.parse(xhr.responseText);
+	obj = JSON.parse(xhr.responseText);
 
+	// H.) Get the URL to the Pokemon image.
+	let smallURL = obj.sprites.other.home.front_default;
+	if (!smallURL) smallURL = "images/no-image-found.png";
 
+	let name = obj.name;
+
+	let dexNum = obj.id;
+
+	let types = [];
+	for (let i = 0; i < obj.types.length; i++){
+		types.push(obj.types[i].type.name);
+	}
+
+	// I.) Build a <div> to hold the result.
+	// --- Es6 String Templating ---
+	let line = `<div class='result'><h2>${name}</h2>`;
+	line += `<span>Pokedex ID: ${dexNum}</span>`;
+	if (types.length == 1){
+		line += `<span>Typing: ${types[0]}</span>`;
+	}
+	else if (types.length == 2){
+		line += `<span>Typing: ${types[0]} & ${types[1]}</span>`;
+	}
+	line += `<img src='${smallURL}' title='${name}'/></div>`;
+
+	// J.) All done building the HTML; display to user.
+	document.querySelector("#content").innerHTML = line;
+
+	// K.) Update the Status.
+	document.querySelector("#status").innerHTML = "<br>Success!</br><p><i>Here is some info found on: '" + displayTerm + "'</i></p>";
 }
 
 function dataError(e){
