@@ -2,8 +2,8 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
 "use strict";
 const app = new PIXI.Application({
-    width: 700,
-    height: 700
+    width: 600,
+    height: 600
 });
 document.body.appendChild(app.view);
 
@@ -26,7 +26,7 @@ let stage;
 
 // game variables
 let startScene;
-let gameScene,ship,scoreLabel,lifeLabel,shootSound,hitSound,fireballSound;
+let gameScene,ship,scoreLabel,gameOverScoreLabel,lifeLabel,shootSound,hitSound,fireballSound;
 let gameOverScene;
 
 let circles = [];
@@ -92,7 +92,7 @@ function setup() {
 function createLabelsAndButtons(){
     let buttonStyle = new PIXI.TextStyle({
         fill: 0xFF0000,
-        fontSize: 48,
+        fontSize: 38,
         fontFamily: "Verdana"
     });
 
@@ -101,7 +101,7 @@ function createLabelsAndButtons(){
     let startLabel1 = new PIXI.Text("Circle Blast!");
     startLabel1.style = new PIXI.TextStyle({
         fill: 0xFFFFFF,
-        fontSize: 96,
+        fontSize: 82,
         fontFamily: "Verdana",
         stroke: 0xFF0000,
         strokeThickness: 6
@@ -136,7 +136,7 @@ function createLabelsAndButtons(){
     startButton.interactive = true;
     startButton.buttonMode = true;
 
-    startButton.on("pointerup", startGame);                         // 'startGame' is a function reference.
+    startButton.on("pointerup", startGame);                       // 'startGame' is a function reference.
     startButton.on('pointerover', e=>e.target.alpha = 0.7);       // Concise arrow function w/ no brackets.
     startButton.on('pointerout', e=>e.currentTarget.alpha = 1.0); // Same as above.
 
@@ -175,11 +175,11 @@ function createLabelsAndButtons(){
 
     // #3 - Set up `gameOverScene`.
     // #3A - Make game over text.
-    let gameOverText = new PIXI.Text("Game Over!\n        :-O");
+    let gameOverText = new PIXI.Text("Game Over!\n      :-O");
     textStyle = new PIXI.TextStyle({
 	    fill: 0xFFFFFF,
 	    fontSize: 64,
-	    fontFamily: "Futura",
+	    fontFamily: "Verdana",
 	    stroke: 0xFF0000,
 	    strokeThickness: 6
     });
@@ -193,7 +193,7 @@ function createLabelsAndButtons(){
     let playAgainButton = new PIXI.Text("Play Again?");
     playAgainButton.style = buttonStyle;
 
-    playAgainButton.x = 150;
+    playAgainButton.x = 180;
     playAgainButton.y = sceneHeight - 100;
 
     playAgainButton.interactive = true;
@@ -204,6 +204,21 @@ function createLabelsAndButtons(){
     playAgainButton.on('pointerout',e=>e.currentTarget.alpha = 1.0); // Same as above.
 
     gameOverScene.addChild(playAgainButton);
+
+    // #3C - Make "Final Score" label.
+    gameOverScoreLabel = new PIXI.Text(`Your final score: ${score}`);
+    textStyle = new PIXI.TextStyle({
+	    fill: 0xFFFFFF,
+	    fontSize: 32,
+	    fontFamily: "Verdana",
+	    stroke: 0xFF0000,
+	    strokeThickness: 6
+    });
+    gameOverScoreLabel.style = textStyle;
+
+    gameOverScoreLabel.x = 130;
+    gameOverScoreLabel.y = 350;
+    gameOverScene.addChild(gameOverScoreLabel);
 }
 
 function startGame(){
@@ -360,6 +375,9 @@ function end(){
     explosions.forEach(e=>gameScene.removeChild(e));
     explosions = [];
 
+    // Display final score.
+    gameOverScoreLabel.text = `Your final score: ${score}`;
+
     gameOverScene.visible = true;
     gameScene.visible = false;
 }
@@ -370,6 +388,15 @@ function fireBullet(e){
     // let mouseY = e.clientY - rect.y;
     // console.log(`${mouseX}, ${mouseY}`);
     if (paused) return;
+
+    if (score >= 5){
+        let bLeft = new Bullet(0xFFFFFF, ship.x - 15, ship.y);
+        let bRight = new Bullet(0xFFFFFF, ship.x + 15, ship.y);
+        bullets.push(bLeft);
+        bullets.push(bRight);
+        gameScene.addChild(bLeft);
+        gameScene.addChild(bRight);
+    }
 
     let b = new Bullet(0xFFFFFF, ship.x, ship.y);
     bullets.push(b);
