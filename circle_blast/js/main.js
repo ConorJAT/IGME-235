@@ -77,11 +77,13 @@ function setup() {
     });
 	
 	// #7 - Load sprite sheet
+    explosionTextures = loadSpriteSheet();
 		
 	// #8 - Start update loop
     app.ticker.add(gameLoop);
 	
 	// #9 - Start listening for click events on the canvas
+    app.view.onclick = fireBullet;
 	
 	// Now our `startScene` is visible
 	// Clicking the button calls startGame()
@@ -271,11 +273,29 @@ function gameLoop(){
 	
 
 	// #4 - Move Bullets.
-
+	for (let b of bullets){
+		b.move(dt);
+	}
 	
 	// #5 - Check for Collisions.
     for (let c of circles){
-        // #5A - Circles and Bullets.
+        for (let b of bullets){
+
+            // #5A - Circles and Bullets.
+            if (rectsIntersect(c,b)){
+                fireballSound.play();
+                createExplosion(c.x, c.y, 64, 64);
+
+                gameScene.removeChild(c);
+                c.isAlive = false;
+
+                gameScene.removeChild(b);
+                b.isAlive = false;
+                increaseScoreBy(1);
+            }
+
+            if(b.y < -10) b.isAlive = false;
+        }
 
         // #5B - Circles and Ship.
         if (c.isAlive && rectsIntersect(c, ship)){
@@ -306,6 +326,10 @@ function gameLoop(){
 	
 	
 	// #8 - Load next level
+    if (circles.length == 0){
+	    levelNum++;
+	    loadLevel();
+    }
 }
 
 function createCircles(numCircles){
@@ -338,4 +362,55 @@ function end(){
 
     gameOverScene.visible = true;
     gameScene.visible = false;
+}
+
+function fireBullet(e){
+    // let rect = app.view.getBoundingClientRect();
+    // let mouseX = e.clientX - rect.x;
+    // let mouseY = e.clientY - rect.y;
+    // console.log(`${mouseX}, ${mouseY}`);
+    if (paused) return;
+
+    let b = new Bullet(0xFFFFFF, ship.x, ship.y);
+    bullets.push(b);
+    gameScene.addChild(b);
+    shootSound.play();
+}
+
+function loadSpriteSheet(){
+    // The 16 animation frames in each row are 64 x 64 pixels.
+    // We are using the second row.
+    // http://pixijs.download/release/docs/PIXI.BaseTexture.html
+
+    let spriteSheet = PIXI.BaseTexture.from("images/explosions.png");
+    let width = 64;
+    let height = 64;
+    let numFrames = 16;
+    let textures = [];
+
+    for (let i=0; i<numFrames; i++){
+        // http://pixijs.download/release/docs/PIXI.Texture.html
+        let frame = new PIXI.Texture(spriteSheet, new PIXI.Rectangle(i * width, 64, width, height));
+        textures.push(frame);
+    }
+
+    return textures;
+}
+
+function createExplosion(x, y, frameWidth, frameHeight){
+    // http://pixijs.download/release/docs/PIXI.AnimatedSprite.html
+    // The animation frames are 64 x 64 pixels.
+
+    let w2 = frameWidth / 2;
+    let h2 = frameHeight / 2;
+
+    let expl = new PIXI.AnimatedSprite(explosionTextures);
+    expl.x = x - w2;    // We want the explosions to appear at the center of circle.
+    expl.y = y - h2;
+    expl.animationSpeed = 1/7;
+    expl.loop = false;
+    expl.onComplete = e => gameScene.removeChild(expl);
+    explosions.push(expl);
+    gameScene.addChild(expl);
+    expl.play();
 }
