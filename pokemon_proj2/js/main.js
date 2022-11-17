@@ -43,18 +43,19 @@ function searchButtonClicked(){
 
 
 function getData(url){
-    // A.) Create a new XHR object.
-    let xhr = new XMLHttpRequest();
 
-    // B.) Set the on-load handler.
-    xhr.onload = dataLoaded;
+	// A.) Create a new XHR object.
+	let xhr = new XMLHttpRequest();
 
-    // C.) Set the on-error handler.
-    xhr.onerror = dataError;
+	// B.) Set the on-load handler.
+	xhr.onload = dataLoaded;
 
-    // D.) Open connection and send the request.
-    xhr.open("GET", url);
-    xhr.send();
+	// C.) Set the on-error handler.
+	xhr.onerror = dataError;
+
+	// D.) Open connection and send the reques
+	xhr.open("GET", url);
+	xhr.send();
 }
 
 
@@ -69,39 +70,53 @@ function dataLoaded(e){
 	// F.) Xhr.responseText is the JSON file we just downloaded.
 	console.log(xhr.responseText);
 
-	// G.) Turn the text into a parsable JavaScript object.
-	obj = JSON.parse(xhr.responseText);
+	try{
+		// G.) Turn the text into a parsable JavaScript object.
+		let obj = JSON.parse(xhr.responseText);
 
-	// H.) Get the URL to the Pokemon image.
-	let smallURL = obj.sprites.other.home.front_default;
-	if (!smallURL) smallURL = "images/no-image-found.png";
+		// H.) Get the URL to the Pokemon image.
+		let smallURL = obj.sprites.other.home.front_default;
+		if (!smallURL) smallURL = "images/no-image-found.png";
 
-	let name = obj.name;
+		let name = obj.name;
 
-	let dexNum = obj.id;
+		let dexNum = obj.id;
 
-	let types = [];
-	for (let i = 0; i < obj.types.length; i++){
-		types.push(obj.types[i].type.name);
+		let types = [];
+		for (let i = 0; i < obj.types.length; i++){
+			types.push(obj.types[i].type.name);
+		}
+
+		// I.) Build a <div> to hold the result.
+		// --- Es6 String Templating ---
+		let line = `<div class='result'><h2>${name}</h2>`;
+		line += `<p>Pokedex ID: ${dexNum}</p>`;
+		if (types.length == 1){
+			line += `<p>Typing: ${types[0]}</p>`;
+		}
+		else if (types.length == 2){
+			line += `<p>Typing: ${types[0]} & ${types[1]}</p>`;
+		}
+		line += `<img src='${smallURL}' title='${name}'/></div>`;
+
+		// J.) All done building the HTML; display to user.
+		document.querySelector("#content").innerHTML = line;
+
+		// K.) Update the Status.
+		document.querySelector("#status").innerHTML = "<br>Success!</br><p><i>Here is some info found on: '" + displayTerm + "'</i></p>";
 	}
 
-	// I.) Build a <div> to hold the result.
-	// --- Es6 String Templating ---
-	let line = `<div class='result'><h2>${name}</h2>`;
-	line += `<p>Pokedex ID: ${dexNum}</p>`;
-	if (types.length == 1){
-		line += `<p>Typing: ${types[0]}</p>`;
-	}
-	else if (types.length == 2){
-		line += `<p>Typing: ${types[0]} & ${types[1]}</p>`;
-	}
-	line += `<img src='${smallURL}' title='${name}'/></div>`;
+	catch (error){
+		let line = `<div class='result'><h2>No Pokemon Found!</h2>`;
+		line += `<p>Pokedex ID: N/A</p>`;
+		line += `<p>Typing: N/A</p>`;
+		line += `<img src='images/no-image-found.png' title='No Image Found'/></div>`;
 
-	// J.) All done building the HTML; display to user.
-	document.querySelector("#content").innerHTML = line;
-
-	// K.) Update the Status.
-	document.querySelector("#status").innerHTML = "<br>Success!</br><p><i>Here is some info found on: '" + displayTerm + "'</i></p>";
+		document.querySelector("#content").innerHTML = line;
+			
+		document.querySelector("#status").innerHTML = "<br>Pokemon not found!</br><p><i>Could not find info on: '" + displayTerm + "'</i></p>";	
+		return;
+	}
 }
 
 function dataError(e){
