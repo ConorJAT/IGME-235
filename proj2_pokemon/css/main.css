@@ -1,0 +1,56 @@
+body{
+    margin: 0 auto;
+    width: 90vw;
+}
+
+h1, h2{
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: 700;
+    color: black;
+}
+
+.widgets, #status, p, ul, li{
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: 400;
+    color: black;
+}
+
+#content{
+    display: grid;
+    grid-template-areas: "image"
+                         "result";
+}
+
+h1{
+    font-size: 32px;
+}
+
+h2{
+    font-size: 24px;
+}
+
+@media screen and (min-width: 780px) {
+    #content{
+        display: grid;
+        grid-template-columns: 49% 49%;
+        grid-template-areas: "image    result";
+
+        grid-column-gap: 2%;
+    }
+
+    h1{
+        font-size: 64px;
+    }
+}
+
+#image{
+    grid-area: image;
+
+    height: 100%;
+    width: 100%;
+    border: 2px solid black
+}
+
+#result{
+    grid-area: result;
+}

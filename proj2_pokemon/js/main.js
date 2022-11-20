@@ -82,22 +82,56 @@ function dataLoaded(e){
 
 		let dexNum = obj.id;
 
+		let weight = obj.weight / 4.536;
+		let weightMetric = obj.weight / 10;
+
+		let height = obj.height / 3.048;
+		let heightMetric = obj.height / 10;
+
 		let types = [];
 		for (let i = 0; i < obj.types.length; i++){
 			types.push(obj.types[i].type.name);
 		}
 
+		let ablty = [];
+		for (let i = 0; i < obj.abilities.length; i++){
+			ablty.push(obj.abilities[i].ability.name);
+		}
+
 		// I.) Build a <div> to hold the result.
 		// --- Es6 String Templating ---
-		let line = `<div class='result'><h2>${name}</h2>`;
-		line += `<p>Pokedex ID: ${dexNum}</p>`;
+		
+		// Pokemon Name
+		let line = `<div class='result'><h2>${name} - No. ${dexNum}</h2>`;
+
+		// Pokemon Classification
+
+
+		// Pokemon Typing
 		if (types.length == 1){
 			line += `<p>Typing: ${types[0]}</p>`;
 		}
 		else if (types.length == 2){
 			line += `<p>Typing: ${types[0]} & ${types[1]}</p>`;
 		}
-		line += `<img src='${smallURL}' title='${name}'/></div>`;
+
+		// Pokemon Abilities
+		line += `<p>Abilities:<ul>`;
+		for (let i = 0; i < ablty.length; i++){
+			line += `<li>${ablty[i]}</li>`;
+		}
+		line += `</ul></p>`;
+
+		// Pokemon Height
+		line += `<p>Average Height: ${height.toFixed(2)} ft (${heightMetric.toFixed(2)} m)</p>`;
+
+		// Pokemon Weight
+		line += `<p>Average Weight: ${weight.toFixed(2)} lbs (${weightMetric.toFixed(2)} kg)</p></div>`;
+
+		// Pokedex Entry
+
+		// Poekmon Image
+		line += `<img src='${smallURL}' title='${name}' id='image'/>`;
 
 		// J.) All done building the HTML; display to user.
 		document.querySelector("#content").innerHTML = line;
@@ -108,9 +142,11 @@ function dataLoaded(e){
 
 	catch (error){
 		let line = `<div class='result'><h2>No Pokemon Found!</h2>`;
-		line += `<p>Pokedex ID: N/A</p>`;
 		line += `<p>Typing: N/A</p>`;
-		line += `<img src='images/no-image-found.png' title='No Image Found'/></div>`;
+		line += `<p>Abilities: N/A</p>`
+		line += `<p>Average Height: N/A</p>`;
+		line += `<p>Average Weight: N/A</p></div>`;
+		line += `<img src='images/no-image-found.png' title='No Image Found' id='image'/>`;
 
 		document.querySelector("#content").innerHTML = line;
 			
