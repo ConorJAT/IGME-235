@@ -1,0 +1,156 @@
+/* UI Styles */
+h1{
+	font-family: 'Press Start 2P', cursive;
+	display: inline-block;
+	position:absolute;
+	font-size:1.3em;
+	top: 0;
+	left:1000px;
+	line-height:1.5em;
+}
+
+div#gridContainer{
+	top:5px;
+	left:5px;
+	padding:0;
+	display:inline-block;
+	position:absolute;
+	z-index: 0; /* underneath everything */
+}
+
+
+/* Background Tile Styles */
+span.floor{
+	width:32px;
+	height:32px;
+	background: url(../images/terrain.png);
+}
+
+span.wall{
+	width:32px;
+	height:32px;
+	background: url(../images/terrain.png);
+	background-position: -32px -32px;
+}
+
+span.grass{
+	width:32px;
+	height:32px;
+	background: url(../images/terrain.png);
+	background-position: -64px -64px;
+}
+
+span.water{
+	width:32px;
+	height:32px;
+	background: url(../images/terrain.png);
+	background-position: -96px -96px;
+}
+
+span.ground{
+	width:32px;
+	height:32px;
+	background: url(../images/terrain.png);
+	background-position: -128px -128px;
+}
+
+span.cell{
+	height:32px;
+	width:32px;
+	border: 1px solid #333; /* actual width & height is 32px because of border */
+	background-color: #ccc;
+	padding:0;
+	margin:0;
+	position:absolute;
+}
+
+span.cellSelected{
+	height:32px;
+	width:32px;
+	border:0;
+	background-color: red;
+	padding:0;
+	margin:0;
+	position:absolute;
+}
+
+
+/* Game Object Styles */
+span.gameObject{
+	height:32px;
+	width:32px;
+	position:absolute;
+	left: -100px;
+	top: -100px;
+	z-index: 100; /* layered between background tiles and player */
+	background-color:black;
+	background: url(../images/nethack-32x32.png);
+}
+
+span.chest1{ 
+	position:absolute;
+	left: -100px;
+	top: -100px;
+	background-position: -1088px -288px;
+}
+
+span.key1{ 
+	position:absolute;
+	left: -100px;
+	top: -100px;
+	background-position: -1024px -448px;
+}
+
+span.monster1{ 
+	position:absolute;
+	left: -100px;
+	top: -100px;
+	z-index: 500; /* layered between other game objects and player */
+	background-position: -96px -32px;
+}
+
+span.monster2{ 
+	position:absolute;
+	left: -100px;
+	top: -100px;
+	z-index: 500; /* layered between other game objects and player */
+	background-position: -192px -128px;
+}
+
+span.monster3{ 
+	position:absolute;
+	left: -100px;
+	top: -100px;
+	z-index: 500; /* layered between other game objects and player */
+	background-position: -192px -224px;
+}
+
+/* player style */
+span.player{ 
+	background: url(../images/nethack-32x32.png);
+	background-position: -96px -96px;
+	z-index: 1000; /* On top of everything */
+	transition-property: all;
+	transition-duration: .25s;
+}
+
+span.ring1{ 
+	position:absolute;
+	left: -100px;
+	top: -100px;
+	background-position: -320px -448px;
+}
+
+span.treasure1{ 
+	position:absolute;
+	left: -100px;
+	top: -100px;
+	background-position: -448px -448px;
+}
+
+span.treasure2{ 
+	position:absolute;
+	left: -100px;
+	top: -100px;
+	background-position: -928px -448px;
+}
