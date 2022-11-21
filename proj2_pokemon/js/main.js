@@ -1,12 +1,31 @@
 // 1
-window.onload = (e) => {document.querySelector("#search").onclick = searchButtonClicked};
-	
+window.onload = (e) => {
+	let searchField = document.querySelector("#searchterm");
+	const prefix = "ctr9664-";
+	const searchKey = prefix + "search";
+
+	const storedSearch = localStorage.getItem(searchKey);
+
+	if (storedSearch){
+		searchField.value = storedSearch;
+	}else{
+		searchField.value = "Pikachu";
+	}
+
+	searchField.onchange = e=>{ localStorage.setItem(searchKey, e.target.value); };
+
+	document.querySelector("#search").onclick = searchButtonClicked
+};
+
 // 2
 let displayTerm = "";
 
 // 3
 function searchButtonClicked(){
     console.log("searchButtonClicked() called");
+
+
+
 
     // A.)
 	const POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
@@ -158,3 +177,4 @@ function dataLoaded(e){
 function dataError(e){
     console.log("An Error Occurred!");
 }
+
