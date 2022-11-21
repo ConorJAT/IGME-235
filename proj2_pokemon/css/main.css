@@ -9,7 +9,7 @@ h1, h2{
     color: black;
 }
 
-.widgets, #status, p, ul, li{
+.widgets, #status, label, p, ul, li{
     font-family: 'Roboto', 'Arial', sans-serif;
     font-weight: 400;
     color: black;

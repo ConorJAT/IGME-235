@@ -1,6 +1,8 @@
+const favorites = [];
+
 // 1
 window.onload = (e) => {
-	let searchField = document.querySelector("#searchterm");
+	const searchField = document.querySelector("#searchterm");
 	const prefix = "ctr9664-";
 	const searchKey = prefix + "search";
 
@@ -23,9 +25,6 @@ let displayTerm = "";
 // 3
 function searchButtonClicked(){
     console.log("searchButtonClicked() called");
-
-
-
 
     // A.)
 	const POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
@@ -145,7 +144,9 @@ function dataLoaded(e){
 		line += `<p>Average Height: ${height.toFixed(2)} ft (${heightMetric.toFixed(2)} m)</p>`;
 
 		// Pokemon Weight
-		line += `<p>Average Weight: ${weight.toFixed(2)} lbs (${weightMetric.toFixed(2)} kg)</p></div>`;
+		line += `<p>Average Weight: ${weight.toFixed(2)} lbs (${weightMetric.toFixed(2)} kg)</p>`;
+
+		line += `<input type="checkbox" id="liked"><label for="liked"> Favorite?</label></div>`;
 
 		// Pokedex Entry
 
