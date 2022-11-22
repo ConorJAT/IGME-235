@@ -2,6 +2,7 @@ const favorites = [];
 
 // 1
 window.onload = (e) => {
+	// Memory for last search term
 	const searchField = document.querySelector("#searchterm");
 	const prefix = "ctr9664-";
 	const searchKey = prefix + "search";
@@ -16,6 +17,7 @@ window.onload = (e) => {
 
 	searchField.onchange = e=>{ localStorage.setItem(searchKey, e.target.value); };
 
+	/// Event for search button
 	document.querySelector("#search").onclick = searchButtonClicked
 };
 
@@ -93,8 +95,35 @@ function dataLoaded(e){
 		let obj = JSON.parse(xhr.responseText);
 
 		// H.) Get the URL to the Pokemon image.
-		let smallURL = obj.sprites.other.home.front_default;
+		let shinyCheck = document.querySelector("#shiny").checked;
+		let genderCheck = document.querySelector("#gender").checked;
+
+		let smallURL;
+
+		if(genderCheck && shinyCheck){
+			if(obj.sprites.other.home.front_shiny_female){
+				smallURL = obj.sprites.other.home.front_shiny_female;
+			}
+			else{
+				smallURL = obj.sprites.other.home.front_shiny;
+			}
+		}
+		else if(shinyCheck){
+			smallURL = obj.sprites.other.home.front_shiny;
+		}
+		else if(genderCheck){
+			if(obj.sprites.other.home.front_female){
+				smallURL = obj.sprites.other.home.front_female;
+			}
+			else{
+				smallURL = obj.sprites.other.home.front_default;
+			}
+		}
+		else{
+			smallURL = obj.sprites.other.home.front_default;
+		}
 		if (!smallURL) smallURL = "images/no-image-found.png";
+
 
 		let name = obj.name;
 
@@ -120,23 +149,20 @@ function dataLoaded(e){
 		// --- Es6 String Templating ---
 		
 		// Pokemon Name
-		let line = `<div class='result'><h2>${name} - No. ${dexNum}</h2>`;
-
-		// Pokemon Classification
-
+		let line = `<div class='result'><h2>${capitalizeFirst(name)} - No. ${dexNum}</h2>`;
 
 		// Pokemon Typing
 		if (types.length == 1){
-			line += `<p>Typing: ${types[0]}</p>`;
+			line += `<p>Typing: ${capitalizeFirst(types[0])}</p>`;
 		}
 		else if (types.length == 2){
-			line += `<p>Typing: ${types[0]} & ${types[1]}</p>`;
+			line += `<p>Typing: ${capitalizeFirst(types[0])} & ${capitalizeFirst(types[1])}</p>`;
 		}
 
 		// Pokemon Abilities
 		line += `<p>Abilities:<ul>`;
 		for (let i = 0; i < ablty.length; i++){
-			line += `<li>${ablty[i]}</li>`;
+			line += `<li>${capitalizeFirst(ablty[i])}</li>`;
 		}
 		line += `</ul></p>`;
 
@@ -144,11 +170,10 @@ function dataLoaded(e){
 		line += `<p>Average Height: ${height.toFixed(2)} ft (${heightMetric.toFixed(2)} m)</p>`;
 
 		// Pokemon Weight
-		line += `<p>Average Weight: ${weight.toFixed(2)} lbs (${weightMetric.toFixed(2)} kg)</p>`;
+		line += `<p>Average Weight: ${weight.toFixed(2)} lbs (${weightMetric.toFixed(2)} kg)</p></div>`;
 
-		line += `<input type="checkbox" id="liked"><label for="liked"> Favorite?</label></div>`;
-
-		// Pokedex Entry
+		// Favorite Checkbox (WIP)
+		// line += `<input type="checkbox" id="liked"><label for="liked"> Favorite?</label></div>`;
 
 		// Poekmon Image
 		line += `<img src='${smallURL}' title='${name}' id='image'/>`;
@@ -158,6 +183,7 @@ function dataLoaded(e){
 
 		// K.) Update the Status.
 		document.querySelector("#status").innerHTML = "<br>Success!</br><p><i>Here is some info found on: '" + displayTerm + "'</i></p>";
+
 	}
 
 	catch (error){
@@ -179,3 +205,29 @@ function dataError(e){
     console.log("An Error Occurred!");
 }
 
+function capitalizeFirst(word){
+	let firstLetter = word.substring(0,1).toUpperCase();
+	let secondHalf = word.substring(1,word.length).toLowerCase();
+	secondHalf = secondHalf.replace("-", " ");
+
+	return firstLetter.concat(secondHalf);
+}
+
+function checkForFavorite(pokemonName){
+	const check = document.querySelector("#liked");
+
+	if (check.checked){
+		favorites.push(pokemonName);
+	}
+
+	else{
+		for (let i = 0; i < favorites.length; i++){
+			if (favorites[i] == pokemonName){
+				delete favorites[i];
+			}
+		}
+
+		let noUndef = function (value) {return value != undefined};
+		favorites = favorites.filter(noUndef);
+	}
+}

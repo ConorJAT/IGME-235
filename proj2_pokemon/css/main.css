@@ -1,6 +1,8 @@
 body{
     margin: 0 auto;
     width: 90vw;
+
+    background-color: bisque;
 }
 
 h1, h2{
@@ -15,10 +17,16 @@ h1, h2{
     color: black;
 }
 
+.widgets{
+    padding: 5px;
+}
+
 #content{
     display: grid;
     grid-template-areas: "image"
                          "result";
+
+    background-color: azure;
 }
 
 h1{
@@ -48,7 +56,10 @@ h2{
 
     height: 100%;
     width: 100%;
-    border: 2px solid black
+    border: 1px solid black;
+
+    background-color: #1c1c1d;
+    background-image: url("../images/pokeball_dec.png");
 }
 
 #result{
