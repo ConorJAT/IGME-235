@@ -21,31 +21,37 @@
 
 <body>
     <header>
+        <img src="images/pokeball-med.png" alt="Pokeball" id="headerimage">
         <h1>Pokemon Finder</h1>
     </header>
+
+    <hr>
     
-    <div class="widgets">
-        Enter Pokemon Name or Pokedex Number: <input type="text" id="searchterm" size="20">
-    </div>
+    <div id="searchtools">
+        <div class="widgets">
+            Enter Pokemon Name or Pokedex Number: <input type="text" id="searchterm" size="20">
+        </div>
     
-    <div class="widgets">
-        Filters:
-        <input type="checkbox" id="shiny"><label for="shiny"> Shiny Sprite?</label>
-        <input type="checkbox" id="gender"><label for="gender"> Female Sprite (If Applicable)?</label>
-        
+        <div class="widgets">
+            Filters:
+            <ul id="filters">
+                <li><input type="checkbox" id="shiny"><label for="shiny"> Shiny Sprite?</label></li>
+                <li><input type="checkbox" id="gender"><label for="gender"> Female Sprite (If Applicable)?</label></li>
+            </ul>
+        </div>
+
+        <div class="widgets">
+            <button type="button" id="search">Search for Pokemon!</button>
+        </div>
+
+        <!-- List of Favorites (WIP) -->
+        <!-- <div class="widgets">
+            Or Pick One From Your Favorites: 
+            <select id="favorites"></select>
+        </div> -->
+
+        <div id="status">Ready to Search!</div>
     </div>
-
-    <div class="widgets">
-        <button type="button" id="search">Search for Pokemon!</button>
-    </div>
-
-    <!-- List of Favorites (WIP) -->
-    <!-- <div class="widgets">
-        Or Pick One From Your Favorites: 
-        <select id="favorites"></select>
-    </div> -->
-
-    <div id="status">Ready to Search!</div>
 
     <hr>
     

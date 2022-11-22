@@ -191,7 +191,8 @@ function dataLoaded(e){
 		line += `<p>Typing: N/A</p>`;
 		line += `<p>Abilities: N/A</p>`
 		line += `<p>Average Height: N/A</p>`;
-		line += `<p>Average Weight: N/A</p></div>`;
+		line += `<p>Average Weight: N/A</p>`;
+		line += `<p>Pokedex Entry: No info found!</p></div>`
 		line += `<img src='images/no-image-found.png' title='No Image Found' id='image'/>`;
 
 		document.querySelector("#content").innerHTML = line;
@@ -211,23 +212,4 @@ function capitalizeFirst(word){
 	secondHalf = secondHalf.replace("-", " ");
 
 	return firstLetter.concat(secondHalf);
-}
-
-function checkForFavorite(pokemonName){
-	const check = document.querySelector("#liked");
-
-	if (check.checked){
-		favorites.push(pokemonName);
-	}
-
-	else{
-		for (let i = 0; i < favorites.length; i++){
-			if (favorites[i] == pokemonName){
-				delete favorites[i];
-			}
-		}
-
-		let noUndef = function (value) {return value != undefined};
-		favorites = favorites.filter(noUndef);
-	}
 }
