@@ -1,5 +1,3 @@
-const favorites = [];
-
 // 1
 window.onload = (e) => {
 	// Memory for last search term
@@ -81,8 +79,6 @@ function getData(url){
 
 // Callback Functions:
 
-let obj;
-
 function dataLoaded(e){
     // E.) Event.target is the xhr object.
 	let xhr = e.target;
@@ -94,12 +90,15 @@ function dataLoaded(e){
 		// G.) Turn the text into a parsable JavaScript object.
 		let obj = JSON.parse(xhr.responseText);
 
+
 		// H.) Get the URL to the Pokemon image.
 		let shinyCheck = document.querySelector("#shiny").checked;
 		let genderCheck = document.querySelector("#gender").checked;
 
 		let smallURL;
 
+		// Find correct image url based off enter criteria
+		// Shiny + Female
 		if(genderCheck && shinyCheck){
 			if(obj.sprites.other.home.front_shiny_female){
 				smallURL = obj.sprites.other.home.front_shiny_female;
@@ -108,9 +107,11 @@ function dataLoaded(e){
 				smallURL = obj.sprites.other.home.front_shiny;
 			}
 		}
+		// Shiny
 		else if(shinyCheck){
 			smallURL = obj.sprites.other.home.front_shiny;
 		}
+		// Female
 		else if(genderCheck){
 			if(obj.sprites.other.home.front_female){
 				smallURL = obj.sprites.other.home.front_female;
@@ -119,31 +120,44 @@ function dataLoaded(e){
 				smallURL = obj.sprites.other.home.front_default;
 			}
 		}
+		// Default
 		else{
 			smallURL = obj.sprites.other.home.front_default;
 		}
+		// If Pokemon does not exist, display 'no image found'
 		if (!smallURL) smallURL = "images/no-image-found.png";
 
-
+		// Get Pokemon Name
 		let name = obj.name;
 
+		// Get Pokemon Dex Number
 		let dexNum = obj.id;
 
+		// Get Pokemon Weight and Height
 		let weight = obj.weight / 4.536;
 		let weightMetric = obj.weight / 10;
 
 		let height = obj.height / 3.048;
 		let heightMetric = obj.height / 10;
 
+		// Get Pokemon Typing
 		let types = [];
 		for (let i = 0; i < obj.types.length; i++){
 			types.push(obj.types[i].type.name);
 		}
 
+		// Get Pokemon Abilities
 		let ablty = [];
 		for (let i = 0; i < obj.abilities.length; i++){
 			ablty.push(obj.abilities[i].ability.name);
 		}
+
+		// Get Pokemon Stats
+		let stats = [];
+		for(let i = 0; i < obj.stats.length; i++){
+			stats.push(obj.stats[i].base_stat)
+		}
+
 
 		// I.) Build a <div> to hold the result.
 		// --- Es6 String Templating ---
@@ -153,24 +167,34 @@ function dataLoaded(e){
 
 		// Pokemon Typing
 		if (types.length == 1){
-			line += `<p>Typing: ${capitalizeFirst(types[0])}</p>`;
+			line += `<p><strong>Typing:</strong> ${capitalizeFirst(types[0])}</p>`;
 		}
 		else if (types.length == 2){
-			line += `<p>Typing: ${capitalizeFirst(types[0])} & ${capitalizeFirst(types[1])}</p>`;
+			line += `<p><strong>Typing:</strong> ${capitalizeFirst(types[0])} & ${capitalizeFirst(types[1])}</p>`;
 		}
 
 		// Pokemon Abilities
-		line += `<p>Abilities:<ul>`;
+		line += `<p><strong>Abilities:</strong><ul class='resultlist'>`;
 		for (let i = 0; i < ablty.length; i++){
 			line += `<li>${capitalizeFirst(ablty[i])}</li>`;
 		}
 		line += `</ul></p>`;
 
 		// Pokemon Height
-		line += `<p>Average Height: ${height.toFixed(2)} ft (${heightMetric.toFixed(2)} m)</p>`;
+		line += `<p><strong>Average Height:</strong> ${height.toFixed(2)} ft (${heightMetric.toFixed(2)} m)</p>`;
 
 		// Pokemon Weight
-		line += `<p>Average Weight: ${weight.toFixed(2)} lbs (${weightMetric.toFixed(2)} kg)</p></div>`;
+		line += `<p><strong>Average Weight:</strong> ${weight.toFixed(2)} lbs (${weightMetric.toFixed(2)} kg)</p>`;
+
+		// Pokemon Stats
+		line += `<p><strong>Base Stats:</strong><ul class='resultlist'>`;
+		line += `<li>HP: ${stats[0]}</li>`;
+		line += `<li>Attack: ${stats[1]}</li>`;
+		line += `<li>Defense: ${stats[2]}</li>`;
+		line += `<li>Special Attack: ${stats[3]}</li>`;
+		line += `<li>Special Defense: ${stats[4]}</li>`;
+		line += `<li>Speed: ${stats[5]}</li>`;
+		line += `</ul></p></div>`;
 
 		// Favorite Checkbox (WIP)
 		// line += `<input type="checkbox" id="liked"><label for="liked"> Favorite?</label></div>`;
@@ -188,11 +212,11 @@ function dataLoaded(e){
 
 	catch (error){
 		let line = `<div class='result'><h2>No Pokemon Found!</h2>`;
-		line += `<p>Typing: N/A</p>`;
-		line += `<p>Abilities: N/A</p>`
-		line += `<p>Average Height: N/A</p>`;
-		line += `<p>Average Weight: N/A</p>`;
-		line += `<p>Pokedex Entry: No info found!</p></div>`
+		line += `<p><strong>Typing:</strong> N/A</p>`;
+		line += `<p><strong>Abilities:</strong> N/A</p>`
+		line += `<p><strong>Average Height:</strong> N/A</p>`;
+		line += `<p><strong>Average Weight:</strong> N/A</p>`;
+		line += `<p><strong>Base Stats:</strong> N/A</p></div>`
 		line += `<img src='images/no-image-found.png' title='No Image Found' id='image'/>`;
 
 		document.querySelector("#content").innerHTML = line;

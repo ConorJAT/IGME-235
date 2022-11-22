@@ -34,6 +34,12 @@ h1{
     padding-left: 15px;
 }
 
+.resultlist{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 30px;
+}
+
 .widgets, #status{
     padding: 5px;
 }
@@ -81,7 +87,7 @@ h2{
 }
 
 /* Grid Styles (Desktop/Wider Screens) */
-@media screen and (min-width: 780px) {
+@media screen and (min-width: 940px) {
     #content{
         display: grid;
         grid-template-columns: 49% 49%;
