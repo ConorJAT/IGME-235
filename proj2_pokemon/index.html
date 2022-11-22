@@ -6,14 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Imported Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
 
+    <!-- Imported Favicon -->
     <link rel="shortcut icon" href="images/icon.ico" type="image/x-icon">
     <link rel="icon" href="images/icon.ico" type="image/x-icon">
 
+    <!-- CSS -->
     <link rel="stylesheet" href="css/main.css">
+
+    <!--- JavaScript -->
 	<script src="js/main.js"></script>
 
     <title>Pokemon Finder</title>
@@ -29,26 +34,21 @@
     
     <div id="searchtools">
         <div class="widgets">
-            Enter Pokemon Name or Pokedex Number: <input type="text" id="searchterm" size="20">
+            <strong>Enter Pokemon Name / Pokedex Number:</strong> <input type="text" id="searchterm" size="20">
         </div>
     
         <div class="widgets">
-            Filters:
+            <strong>Filters:</strong>
             <ul id="filters">
                 <li><input type="checkbox" id="shiny"><label for="shiny"> Shiny Sprite?</label></li>
                 <li><input type="checkbox" id="gender"><label for="gender"> Female Sprite (If Applicable)?</label></li>
+                <li><input type="checkbox" id="mega"><label for="mega"> Mega Evolution (If Applicable)?</label></li>
             </ul>
         </div>
 
         <div class="widgets">
             <button type="button" id="search">Search for Pokemon!</button>
         </div>
-
-        <!-- List of Favorites (WIP) -->
-        <!-- <div class="widgets">
-            Or Pick One From Your Favorites: 
-            <select id="favorites"></select>
-        </div> -->
 
         <div id="status">Ready to Search!</div>
     </div>

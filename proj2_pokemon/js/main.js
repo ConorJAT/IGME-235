@@ -26,6 +26,8 @@ let displayTerm = "";
 function searchButtonClicked(){
     console.log("searchButtonClicked() called");
 
+	let megaCheck = document.querySelector("#mega").checked;
+
     // A.)
 	const POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
 
@@ -48,6 +50,10 @@ function searchButtonClicked(){
 
 	// G.) Append the search term to the URL; the parameter name is 'q'.
 	url += term;
+
+	if(megaCheck){
+		url += "-mega";
+	}
 
     // H.) Update the UI.
 	document.querySelector("#status").innerHTML = "<br>Searching for '" + displayTerm + "'</br>";
@@ -231,9 +237,17 @@ function dataError(e){
 }
 
 function capitalizeFirst(word){
-	let firstLetter = word.substring(0,1).toUpperCase();
-	let secondHalf = word.substring(1,word.length).toLowerCase();
-	secondHalf = secondHalf.replace("-", " ");
+	let newWord = word.replace("-", " ");
+	let fragments = newWord.split(" ");
 
-	return firstLetter.concat(secondHalf);
+	let returnWord = "";
+
+	for (let i = 0; i < fragments.length; i++){
+		let firstLetter = fragments[i].substring(0,1).toUpperCase();
+		let secondHalf = fragments[i].substring(1,fragments[i].length).toLowerCase();
+
+		returnWord += firstLetter + secondHalf + " ";
+	}
+
+	return returnWord;
 }
