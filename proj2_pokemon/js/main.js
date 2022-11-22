@@ -24,7 +24,7 @@ let displayTerm = "";
 
 // 3
 function searchButtonClicked(){
-    console.log("searchButtonClicked() called");
+    // console.log("searchButtonClicked() called");
 
 	let megaCheck = document.querySelector("#mega").checked;
 
@@ -59,7 +59,7 @@ function searchButtonClicked(){
 	document.querySelector("#status").innerHTML = "<br>Searching for '" + displayTerm + "'</br>";
 
 	// I.) See what the URL looks like.
-	console.log(url);
+	// console.log(url);
 
     // J.) Request data.
 	getData(url);
@@ -90,7 +90,7 @@ function dataLoaded(e){
 	let xhr = e.target;
 
 	// F.) Xhr.responseText is the JSON file we just downloaded.
-	console.log(xhr.responseText);
+	// console.log(xhr.responseText);
 
 	try{
 		// G.) Turn the text into a parsable JavaScript object.
@@ -218,6 +218,7 @@ function dataLoaded(e){
 
 	catch (error){
 		let line = `<div class='result'><h2>No Pokemon Found!</h2>`;
+		line += `<p id="sidenote">Search term may have been entered incorrectly or Pokemon does not exist.</p>`
 		line += `<p><strong>Typing:</strong> N/A</p>`;
 		line += `<p><strong>Abilities:</strong> N/A</p>`
 		line += `<p><strong>Average Height:</strong> N/A</p>`;
