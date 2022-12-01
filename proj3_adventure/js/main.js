@@ -218,14 +218,17 @@ function gameLoop(){
     let amt = dt * 6;   // At 60 FPS, would move 10% of distance per update.
 
     // Lerp (linear interpolate) the x and y values with lerp().
-    let newX = lerp(knight.x, mousePosition.x, amt);
-    let newY = lerp(knight.y, mousePosition.y, amt);
+    // let newX = lerp(knight.x, mousePosition.x, amt);
+    // let newY = lerp(knight.y, mousePosition.y, amt);
+    // knight.movePlayer();
+    knight.faceMouse(mousePosition.x, mousePosition.y);
+
 
     // Keep the ship on screen with clamp().
     let w2 = knight.width/2;
     let h2 = knight.height/2;
-    knight.x = clamp(newX, 0 + w2, sceneWidth - w2);
-    knight.y = clamp(newY, 0 + h2, sceneHeight - h2);
+    knight.x = clamp(knight.x, 0 + w2, sceneWidth - w2);
+    knight.y = clamp(knight.y, 0 + h2, sceneHeight - h2);
 	
 
 	// #3 - Move Circles.
@@ -257,3 +260,21 @@ function loadLevel(){
 	createMonsters(levelNum * 5);
 	paused = false;
 }
+
+document.addEventListener('keydown', (event) => {
+    if (event.key == "w"){
+        knight.y -= knight.speed * (1/60);
+    }
+
+    if (event.key == "a"){
+        knight.x -= knight.speed * (1/60);
+    }
+
+    if (event.key == "s"){
+        knight.y += knight.speed * (1/60);
+    }
+
+    if (event.key == "d"){
+        knight.x += knight.speed * (1/60);
+    }
+});

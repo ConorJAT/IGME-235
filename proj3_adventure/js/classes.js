@@ -2,10 +2,20 @@ class Knight extends PIXI.Graphics{
     constructor(color = 0xFFFFFF, x = 0, y = 0){
         super();
         this.beginFill(color);
-        this.drawRect(0, 0, 32, 32);
+        this.drawRect(-16, -16, 32, 32);
         this.endFill();
         this.x = x;
         this.y = y;
+
+        this.speed = 400;
+        this.fwd = {x:0, y:-1}
+    }
+
+    faceMouse(mouseX, mouseY){
+        let toMouseX = mouseX - this.x;
+        let toMouseY = mouseY - this.y;
+
+        this.rotation += Math.atan(toMouseY/toMouseX) * (1/60);
     }
 }
 
