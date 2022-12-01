@@ -1,14 +1,12 @@
-class Knight extends PIXI.Graphics{
-    constructor(color = 0xFFFFFF, x = 0, y = 0){
-        super();
-        this.beginFill(color);
-        this.drawRect(-16, -16, 32, 32);
-        this.endFill();
+class Knight extends PIXI.Sprite{
+    constructor(x = 0, y = 0){
+        super(app.loader.resources["images/knight.png"].texture);
+        this.anchor.set(0.5, 0.5);  // Position, scaling and rotation now from center of sprite.
+        this.scale.set(0.15);
         this.x = x;
         this.y = y;
 
-        this.speed = 400;
-        this.fwd = {x:0, y:-1}
+        this.speed = 500;
     }
 
     faceMouse(mouseX, mouseY){
@@ -19,12 +17,10 @@ class Knight extends PIXI.Graphics{
     }
 }
 
-class Monster extends PIXI.Graphics{
-    constructor(radius, color = 0xFF0000, x = 0, y = 0){
-        super();
-        this.beginFill(color);
-        this.drawCircle(0, 0, radius);
-        this.endFill();
+class Monster extends PIXI.Sprite{
+    constructor(radius, x = 0, y = 0){
+        super(app.loader.resources["images/spider_smll.png"].texture);
+        this.anchor.set(0.5, 0.5);  // Position, scaling and rotation now from center of sprite.
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -48,7 +44,3 @@ class Monster extends PIXI.Graphics{
         this.fwd.y *= -1;
     }
 }
-
-/*class Knight extends PIXI.Sprite{
-
-}*/

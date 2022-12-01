@@ -16,8 +16,10 @@ let stage;
 // Pre-Load Images
 app.loader.
     add([
-        // Images go here.
-        "images/"
+        "images/knight_player.png",
+        "images/knight.png",
+        "images/spider_smll.png",
+        "images/spider.png"
     ]);
 app.loader.onProgress.add(e => { console.log(`progress=${e.progress}`) });
 app.loader.onComplete.add(setup);
