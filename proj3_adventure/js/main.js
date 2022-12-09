@@ -37,6 +37,19 @@ let lives = 3;
 let levelNum = 1;
 let paused = true;
 
+let keys = {};
+
+window.addEventListener("keydown", keysDown);
+window.addEventListener("keyup", keysUp);
+
+function keysDown(e){
+    keys[e.keyCode] = true;
+}
+
+function keysUp(e){
+    keys[e.keyCode] = false;
+}
+
 function setup() {
 	stage = app.stage;
 
@@ -215,15 +228,33 @@ function gameLoop(){
 
 	// #2 - Move Ship.
     let mousePosition = app.renderer.plugins.interaction.mouse.global;
-    //ship.position = mousePosition;
 
     let amt = dt * 6;   // At 60 FPS, would move 10% of distance per update.
 
-    // Lerp (linear interpolate) the x and y values with lerp().
-    // let newX = lerp(knight.x, mousePosition.x, amt);
-    // let newY = lerp(knight.y, mousePosition.y, amt);
-    // knight.movePlayer();
+    // Player Rotation
     knight.faceMouse(mousePosition.x, mousePosition.y);
+
+    // Player Movement
+    // W
+    if (keys["87"]){
+        knight.y -= 5;
+    }
+
+    // A
+    if (keys["65"]){
+        knight.x -= 5;
+    }
+
+    // S
+    if (keys["83"]){
+        knight.y += 5;
+    }
+
+    // D
+    if (keys["68"]){
+        knight.x += 5;
+    }
+    
 
 
     // Keep the ship on screen with clamp().
@@ -262,21 +293,3 @@ function loadLevel(){
 	createMonsters(levelNum * 5);
 	paused = false;
 }
-
-document.addEventListener('keydown', (event) => {
-    if (event.key == "w"){
-        knight.y -= knight.speed * (1/60);
-    }
-
-    if (event.key == "a"){
-        knight.x -= knight.speed * (1/60);
-    }
-
-    if (event.key == "s"){
-        knight.y += knight.speed * (1/60);
-    }
-
-    if (event.key == "d"){
-        knight.x += knight.speed * (1/60);
-    }
-});
