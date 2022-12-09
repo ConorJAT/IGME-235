@@ -12,14 +12,30 @@ class Knight extends PIXI.Sprite{
     faceMouse(mouseX, mouseY){
         let toMouseX = mouseX - this.x;
         let toMouseY = mouseY - this.y;
+        
+        /*if (toMouseY/toMouseX <= 0){
+            this.rotation = Math.atan(toMouseY/toMouseX) + (Math.PI / 2);
+        }
 
-        if (toMouseY/toMouseX > 0){
-            this.rotation = Math.atan(toMouseY/toMouseX) + Math.PI / 2;
+        else if (toMouseY/toMouseX > 0){
+            this.rotation = Math.atan(toMouseY/toMouseX) - (Math.PI / 2);
+        }*/
+
+        if (toMouseY >= 0 && toMouseX >= 0){
+            this.rotation = Math.atan(toMouseY/toMouseX) - (Math.PI / 2);
+        }
+
+        else if (toMouseY <= 0 && toMouseX >= 0){
+            this.rotation = Math.atan(toMouseY/toMouseX) - (Math.PI / 2);
+        }
+
+        else if (toMouseY <= 0 && toMouseX <= 0){
+            this.rotation = Math.atan(toMouseY/toMouseX) + (Math.PI / 2);
         }
 
         else{
-            this.rotation = Math.atan(toMouseY/toMouseX) - Math.PI / 2;
-        } 
+            this.rotation = Math.atan(toMouseY/toMouseX) + (Math.PI / 2);
+        }
     }
 }
 
