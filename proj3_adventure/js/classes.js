@@ -5,8 +5,6 @@ class Knight extends PIXI.Sprite{
         this.scale.set(0.15);
         this.x = x;
         this.y = y;
-
-        this.speed = 500;
     }
 
     faceMouse(mouseX, mouseY){
@@ -29,6 +27,30 @@ class Knight extends PIXI.Sprite{
         else{
             this.rotation = Math.atan(toMouseY/toMouseX) + (Math.PI / 2);
         }
+    }
+
+    getRotation(){
+        return this.rotation;
+    }
+}
+
+class Arrow extends PIXI.Sprite{
+    constructor(x = 0, y = 0, rotate = 0){
+        super(app.loader.resources["images/arrow_smll.png"].texture);
+        this.anchor.set(0.5, 0.5);  // Position, scaling and rotation now from center of sprite.
+        this.rotation = rotate;
+        this.x = x;
+        this.y = y;
+
+        // Variables
+        this.speed = 400;
+        this.isAlive = true;
+        Object.seal(this);
+    }
+
+    move(dt = 1/60){
+        this.x += -Math.sin(this.rotation) * this.speed * dt;
+        this.y += Math.cos(this.rotation) * this.speed * dt;
     }
 }
 

@@ -18,6 +18,8 @@ app.loader.
     add([
         "images/knight_player.png",
         "images/knight.png",
+        "images/arrow.png",
+        "images/arrow_smll.png",
         "images/spider_smll.png",
         "images/spider.png"
     ]);
@@ -31,6 +33,7 @@ let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel;
 let gameOverScene;
 
 let monsters = [];
+let arrows = [];
 let score = 0;
 let health = 100;
 let lives = 3;
@@ -84,7 +87,7 @@ function setup() {
     app.ticker.add(gameLoop);
 	
 	// #9 - Start listening for click events on the canvas
-    
+    app.view.onclick = fireArrow;
 	
 	// Now our `startScene` is visible
 	// Clicking the button calls startGame()
@@ -226,7 +229,7 @@ function gameLoop(){
     if (dt > 1/12) dt=1/12;
 	
 
-	// #2 - Move Ship.
+	// #2 - Move Player.
     let mousePosition = app.renderer.plugins.interaction.mouse.global;
 
     let amt = dt * 6;   // At 60 FPS, would move 10% of distance per update.
@@ -237,34 +240,33 @@ function gameLoop(){
     // Player Movement
     // W
     if (keys["87"]){
-        knight.y -= 5;
+        knight.y -= 3;
     }
 
     // A
     if (keys["65"]){
-        knight.x -= 5;
+        knight.x -= 3;
     }
 
     // S
     if (keys["83"]){
-        knight.y += 5;
+        knight.y += 3;
     }
 
     // D
     if (keys["68"]){
-        knight.x += 5;
+        knight.x += 3;
     }
     
 
-
-    // Keep the ship on screen with clamp().
+    // Keep the player on screen with clamp().
     let w2 = knight.width/2;
     let h2 = knight.height/2;
     knight.x = clamp(knight.x, 0 + w2, sceneWidth - w2);
     knight.y = clamp(knight.y, 0 + h2, sceneHeight - h2);
 	
 
-	// #3 - Move Circles.
+	// #3 - Move Enemies.
 	for (let c of monsters){
         c.move(dt);
         if (c.x <= c.radius || c.x >= sceneWidth - c.radius){
@@ -277,6 +279,23 @@ function gameLoop(){
             c.move(dt);
         }
     }
+
+    // #4 - Move Arrows
+    for (let a of arrows){
+		a.move(dt);
+	}
+}
+
+function fireArrow(e){
+    // let rect = app.view.getBoundingClientRect();
+    // let mouseX = e.clientX - rect.x;
+    // let mouseY = e.clientY - rect.y;
+    // console.log(`${mouseX}, ${mouseY}`);
+    if (paused) return;
+
+    let b = new Arrow(knight.x, knight.y, knight.getRotation());
+    arrows.push(b);
+    gameScene.addChild(b);
 }
 
 function createMonsters(numMonsters){
