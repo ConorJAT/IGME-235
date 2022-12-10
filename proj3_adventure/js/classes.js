@@ -28,10 +28,6 @@ class Knight extends PIXI.Sprite{
             this.rotation = Math.atan(toMouseY/toMouseX) + (Math.PI / 2);
         }
     }
-
-    getRotation(){
-        return this.rotation;
-    }
 }
 
 class Arrow extends PIXI.Sprite{

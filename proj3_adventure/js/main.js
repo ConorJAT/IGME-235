@@ -29,7 +29,7 @@ app.loader.load();
 
 // Game Variables
 let startScene;
-let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel;
+let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, shootSound, hitSound;
 let gameOverScene;
 
 let monsters = [];
@@ -78,7 +78,13 @@ function setup() {
     gameScene.addChild(knight);
 	
 	// #6 - Load Sounds
-    
+    shootSound = new Howl({
+	    src: ['audio/arrow_fire.mp3']
+    });
+
+    hitSound = new Howl({
+        src: ['audio/hurt.mp3']
+    })
 	
 	// #7 - Load sprite sheet
     
@@ -210,7 +216,15 @@ function increaseScoreBy(value){
 }
 
 function decreaseHealthBy(value){
-    health -= value;
+    if (health <= 0 || health - value <= 0){
+        decreaseLivesBy(1);
+        health = 100;
+    }
+    
+    else{
+        health -= value;
+    }
+    
     health = parseInt(health);
     healthLabel.text = `Health:    ${health}%`;
 }
@@ -284,18 +298,75 @@ function gameLoop(){
     for (let a of arrows){
 		a.move(dt);
 	}
+
+
+    // #5 - Check for Collisions.
+    for (let m of monsters){
+        for (let a of arrows){
+
+            // #5A - Monsters and Arrows
+            if (rectsIntersect(a,m)){
+
+                gameScene.removeChild(a);
+                a.isAlive = false;
+
+                gameScene.removeChild(m);
+                m.isAlive = false;
+                increaseScoreBy(10);
+            }
+
+            if(a.y < -20 || a.y > 740 || a.x < -20 || a.x > 740) a.isAlive = false;
+        }
+
+        // #5B - Monsters and Player
+        if (m.isAlive && rectsIntersect(m, knight)){
+            hitSound.play();
+            gameScene.removeChild(m);
+            m.isAlive = false;
+            decreaseHealthBy(20);
+        }
+    }
+	
+
+	// #6 - Now do some clean up.
+    // Remove dead arrows.
+    arrows = arrows.filter(a=>a.isAlive);
+
+    // Remove dead monsters.
+    monsters = monsters.filter(m=>m.isAlive);
+
+
+    // #7 - Is game over?
+    if (lives <= 0){
+        end();
+        return;     // Return here so we skip #8 below.
+    }
+}
+
+function end(){
+    paused = true;
+
+    // Clear out level.
+    monsters.forEach(m=>gameScene.removeChild(m));
+    monsters = [];
+
+    arrows.forEach(a=>gameScene.removeChild(a));
+    arrows = [];
+
+    // Display final score.
+    gameOverScoreLabel.text = `Your final score: ${score}`;
+
+    gameOverScene.visible = true;
+    gameScene.visible = false;
 }
 
 function fireArrow(e){
-    // let rect = app.view.getBoundingClientRect();
-    // let mouseX = e.clientX - rect.x;
-    // let mouseY = e.clientY - rect.y;
-    // console.log(`${mouseX}, ${mouseY}`);
     if (paused) return;
 
-    let b = new Arrow(knight.x, knight.y, knight.getRotation());
+    let b = new Arrow(knight.x, knight.y, knight.rotation);
     arrows.push(b);
     gameScene.addChild(b);
+    shootSound.play();
 }
 
 function createMonsters(numMonsters){
