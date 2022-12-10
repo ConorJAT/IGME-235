@@ -84,6 +84,25 @@ class Monster extends PIXI.Sprite{
     }
 }
 
+class PowerUp extends PIXI.Sprite{
+    constructor(x = 0, y = 0){
+        super(app.loader.resources["images/powerup.png"].texture);
+        this.anchor.set(0.5, 0.5);  // Position, scaling and rotation now from center of sprite.
+        this.x = x;
+        this.y = y;
+
+        // Variables
+        this.fwd = {x:0, y:1};
+        this.speed = 80;
+        this.isAlive = true;
+    }
+
+    move(dt = 1/60){
+        this.x += this.fwd.x * this.speed * dt;
+        this.y += this.fwd.y * this.speed * dt;
+    }
+}
+
 class Background extends PIXI.Sprite{
     constructor(x = 0, y = 0){
         super(app.loader.resources["images/background.png"].texture);

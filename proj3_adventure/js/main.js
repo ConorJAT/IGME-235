@@ -19,6 +19,7 @@ app.loader.
         "images/knight.png",
         "images/knight_protect.png",
         "images/arrow_smll.png",
+        "images/powerup.png",
         "images/spider_smll.png",
         "images/background.png"
     ]);
@@ -34,6 +35,7 @@ let gameOverScene;
 
 let monsters = [];
 let arrows = [];
+let powerups = [];
 let score = 0;
 let health = 100;
 let lives = 3;
@@ -297,6 +299,19 @@ function decreaseHealthBy(value){
     healthLabel.text = `Health:    ${health}%`;
 }
 
+function increaseHealthBy(value){
+    if (health >= 100 || health + value >= 100){
+        health = 100;
+    }
+
+    else{
+        health += value;
+    }
+
+    health = parseInt(health);
+    healthLabel.text = `Health:    ${health}%`;
+}
+
 function decreaseLivesBy(value){
     lives -= value;
     lives = parseInt(lives);
@@ -310,6 +325,12 @@ function gameLoop(){
     let dt = 1/app.ticker.FPS;
     if (dt > 1/12) dt=1/12;
 	
+
+    if(powerups.length < 2){
+        if(Math.random() * 10000 <= 10){
+            createPowerUp();
+        }
+    }
 
 	if (shielded){
         gameScene.removeChild(knight);
@@ -346,13 +367,12 @@ function gameLoop(){
         knight.x += 3;
     }
     
-
     // Keep the player on screen with clamp().
     let w2 = knight.width/2;
     let h2 = knight.height/2;
     knight.x = clamp(knight.x, 0 + w2, sceneWidth - w2);
     knight.y = clamp(knight.y, 0 + h2, sceneHeight - h2);
-	
+
 
 	// #3 - Move Enemies.
 	for (let c of monsters){
@@ -373,6 +393,9 @@ function gameLoop(){
 		a.move(dt);
 	}
 
+    for (let p of powerups){
+        p.move(dt);
+    }
 
     // #5 - Check for Collisions.
     for (let m of monsters){
@@ -392,6 +415,8 @@ function gameLoop(){
 
             if(a.y < -20 || a.y > 740 || a.x < -20 || a.x > 740) a.isAlive = false;
         }
+
+        
 
         // #5B - Monsters and Player
         if (m.isAlive && rectsIntersect(m, knight)){
@@ -413,6 +438,35 @@ function gameLoop(){
             m.isAlive = false;
         }
     }
+
+    // #5C - Power-Ups and Player
+    for (let p of powerups){
+
+        if (rectsIntersect(p, knight)){
+            gameScene.removeChild(p);
+            p.isAlive = false;
+            increaseScoreBy(25);
+
+            let effect = Math.floor(Math.random() * 3);
+
+            
+            switch(effect){
+                case 0:
+                    triShot = true;
+                    break;
+
+                case 1:
+                    shielded = true;
+                    break;
+
+                case 2:
+                    increaseHealthBy(30);
+                    break;
+            }
+        }
+
+        if(p.y >= 740) a.isAlive = false;
+    }
 	
 
 	// #6 - Now do some clean up.
@@ -422,11 +476,20 @@ function gameLoop(){
     // Remove dead monsters.
     monsters = monsters.filter(m=>m.isAlive);
 
+    // Remove dead powerups.
+    powerups = powerups.filter(p=>p.isAlive);
+
 
     // #7 - Is game over?
     if (lives <= 0){
         end();
         return;     // Return here so we skip #8 below.
+    }
+
+    // #8 - Load next level
+    if (monsters.length == 0){
+        levelNum++;
+        loadLevel();
     }
 }
 
@@ -474,6 +537,12 @@ function createMonsters(numMonsters){
         monsters.push(c);
         gameScene.addChild(c);
     }
+}
+
+function createPowerUp(){
+    let p = new PowerUp((Math.random() * 689) + 16, -20);
+    powerups.push(p);
+    gameScene.addChild(p);
 }
 
 function loadLevel(){
