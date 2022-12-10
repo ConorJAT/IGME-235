@@ -16,12 +16,10 @@ let stage;
 // Pre-Load Images
 app.loader.
     add([
-        "images/knight_player.png",
         "images/knight.png",
-        "images/arrow.png",
+        "images/knight_protect.png",
         "images/arrow_smll.png",
         "images/spider_smll.png",
-        "images/spider.png",
         "images/background.png"
     ]);
 app.loader.onProgress.add(e => { console.log(`progress=${e.progress}`) });
@@ -30,7 +28,8 @@ app.loader.load();
 
 // Game Variables
 let startScene;
-let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, shootSound, hitSound, spdrDeathSound;
+let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel; 
+let shootSound, hitSound, shieldHitSound, spdrDeathSound;
 let gameOverScene;
 
 let monsters = [];
@@ -40,6 +39,10 @@ let health = 100;
 let lives = 3;
 let levelNum = 1;
 let paused = true;
+
+// Powerup Variables
+let triShot = false;
+let shielded = false;
 
 let keys = {};
 
@@ -74,11 +77,11 @@ function setup() {
 	// #4 - Create labels for all 3 scenes
     createLabelsAndButtons();
 	
-	// #5 - Create ship
+	// #5 - Create player
     knight = new Knight();
     gameScene.addChild(knight);
 	
-	// #6 - Load Sounds
+	// #6 - Load audio
     shootSound = new Howl({
 	    src: ['audio/arrow_fire.mp3']
     });
@@ -89,6 +92,10 @@ function setup() {
 
     spdrDeathSound = new Howl({
         src: ['audio/spider_death.wav']
+    })
+
+    shieldHitSound = new Howl({
+        src: ['audio/shield_hit.mp3']
     })
 	
 	// #7 - Load sprite sheet
@@ -201,6 +208,57 @@ function createLabelsAndButtons(){
 
     gameScene.addChild(livesLabel);
     decreaseLivesBy(0);
+
+
+    // #3 - Set up `gameOverScene`.
+
+    gameOverScene.addChild(new Background());
+
+    // #3A - Make game over text.
+    let gameOverText = new PIXI.Text("Game Over!\n      :-O");
+    textStyle = new PIXI.TextStyle({
+	    fill: 0xFFFFFF,
+	    fontSize: 64,
+	    fontFamily: "Verdana",
+	    stroke: 0xFF0000,
+	    strokeThickness: 6
+    });
+    gameOverText.style = textStyle;
+
+    gameOverText.x = 100;
+    gameOverText.y = sceneHeight/2 - 160;
+    gameOverScene.addChild(gameOverText);
+
+    // #3B - Make "Play Again?" button.
+    let playAgainButton = new PIXI.Text("Play Again?");
+    playAgainButton.style = buttonStyle;
+
+    playAgainButton.x = 180;
+    playAgainButton.y = sceneHeight - 100;
+
+    playAgainButton.interactive = true;
+    playAgainButton.buttonMode = true;
+
+    playAgainButton.on("pointerup",startGame);                       // 'startGame' is a function reference.
+    playAgainButton.on('pointerover',e=>e.target.alpha = 0.7);       // Concise arrow function w/ no brackets.
+    playAgainButton.on('pointerout',e=>e.currentTarget.alpha = 1.0); // Same as above.
+
+    gameOverScene.addChild(playAgainButton);
+
+    // #3C - Make "Final Score" label.
+    gameOverScoreLabel = new PIXI.Text(`Your final score: ${score}`);
+    textStyle = new PIXI.TextStyle({
+	    fill: 0xFFFFFF,
+	    fontSize: 32,
+	    fontFamily: "Verdana",
+	    stroke: 0xFF0000,
+	    strokeThickness: 6
+    });
+    gameOverScoreLabel.style = textStyle;
+
+    gameOverScoreLabel.x = 130;
+    gameOverScoreLabel.y = 350;
+    gameOverScene.addChild(gameOverScoreLabel);
 }
 
 function startGame(){
@@ -211,7 +269,7 @@ function startGame(){
     levelNum = 1;
     score = 0;
     health = 100;
-    lives = 3;
+    lives = 1;
     increaseScoreBy(0);
     decreaseHealthBy(0);
     decreaseLivesBy(0);
@@ -253,7 +311,13 @@ function gameLoop(){
     if (dt > 1/12) dt=1/12;
 	
 
-	// #2 - Move Player.
+	if (shielded){
+        gameScene.removeChild(knight);
+        knight = new Knight(knight.x, knight.y, true);
+        gameScene.addChild(knight);
+    }
+    
+    // #2 - Move Player.
     let mousePosition = app.renderer.plugins.interaction.mouse.global;
 
     let amt = dt * 6;   // At 60 FPS, would move 10% of distance per update.
@@ -331,10 +395,22 @@ function gameLoop(){
 
         // #5B - Monsters and Player
         if (m.isAlive && rectsIntersect(m, knight)){
-            hitSound.play();
+            if(shielded){
+                shieldHitSound.play();
+                shielded = false;
+
+                gameScene.removeChild(knight);
+                knight = new Knight(knight.x, knight.y);
+                gameScene.addChild(knight);
+            }
+            
+            else{
+                hitSound.play();
+                decreaseHealthBy(20);
+            }
+            
             gameScene.removeChild(m);
             m.isAlive = false;
-            decreaseHealthBy(20);
         }
     }
 	
@@ -373,6 +449,16 @@ function end(){
 
 function fireArrow(e){
     if (paused) return;
+
+    if (triShot){
+        let aLeft = new Arrow(knight.x, knight.y, (knight.rotation - (Math.PI/12)));
+        arrows.push(aLeft);
+        gameScene.addChild(aLeft);
+
+        let aRight = new Arrow(knight.x, knight.y, (knight.rotation + (Math.PI/12)));
+        arrows.push(aRight);
+        gameScene.addChild(aRight);
+    }
 
     let b = new Arrow(knight.x, knight.y, knight.rotation);
     arrows.push(b);

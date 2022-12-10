@@ -1,6 +1,12 @@
 class Knight extends PIXI.Sprite{
-    constructor(x = 0, y = 0){
-        super(app.loader.resources["images/knight.png"].texture);
+    constructor(x = 0, y = 0, shielded = false){
+        if (shielded){
+            super(app.loader.resources["images/knight_protect.png"].texture);
+        }
+        else{
+            super(app.loader.resources["images/knight.png"].texture);
+        }
+        
         this.anchor.set(0.5, 0.5);  // Position, scaling and rotation now from center of sprite.
         this.scale.set(0.15);
         this.x = x;
