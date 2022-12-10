@@ -21,7 +21,8 @@ app.loader.
         "images/arrow.png",
         "images/arrow_smll.png",
         "images/spider_smll.png",
-        "images/spider.png"
+        "images/spider.png",
+        "images/background.png"
     ]);
 app.loader.onProgress.add(e => { console.log(`progress=${e.progress}`) });
 app.loader.onComplete.add(setup);
@@ -29,7 +30,7 @@ app.loader.load();
 
 // Game Variables
 let startScene;
-let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, shootSound, hitSound;
+let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, shootSound, hitSound, spdrDeathSound;
 let gameOverScene;
 
 let monsters = [];
@@ -85,6 +86,10 @@ function setup() {
     hitSound = new Howl({
         src: ['audio/hurt.mp3']
     })
+
+    spdrDeathSound = new Howl({
+        src: ['audio/spider_death.wav']
+    })
 	
 	// #7 - Load sprite sheet
     
@@ -107,6 +112,9 @@ function createLabelsAndButtons(){
     });
 
     // #1 - Set up 'startScene'.
+
+    startScene.addChild(new Background());
+
     // #1A - Create start top label.
     let startLabel1 = new PIXI.Text("The Monster Pit");
     startLabel1.style = new PIXI.TextStyle({
@@ -161,6 +169,8 @@ function createLabelsAndButtons(){
         stroke: 0xFF0000,
         strokeThickness: 4
     });
+
+    gameScene.addChild(new Background());
 
     // #2A - Create score label.
     scoreLabel = new PIXI.Text();
@@ -306,6 +316,7 @@ function gameLoop(){
 
             // #5A - Monsters and Arrows
             if (rectsIntersect(a,m)){
+                spdrDeathSound.play();
 
                 gameScene.removeChild(a);
                 a.isAlive = false;

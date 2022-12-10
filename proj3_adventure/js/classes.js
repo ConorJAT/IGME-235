@@ -77,3 +77,9 @@ class Monster extends PIXI.Sprite{
         this.fwd.y *= -1;
     }
 }
+
+class Background extends PIXI.Sprite{
+    constructor(x = 0, y = 0){
+        super(app.loader.resources["images/background.png"].texture);
+    }
+}
