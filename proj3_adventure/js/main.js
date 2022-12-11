@@ -30,13 +30,14 @@ app.loader.
         "images/power_shield.png",
         "images/heart.png"
     ]);
-app.loader.onProgress.add(e => { console.log(`progress=${e.progress}`) });
+//app.loader.onProgress.add(e => { console.log(`progress=${e.progress}`) });
 app.loader.onComplete.add(setup);
 app.loader.load();
 
 // Game Variables
 let startScene;
-let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, powerupLabel, triArrowCount; 
+let gameScene, knight, triArrowCount;
+let scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, powerupLabel;  
 let shootSound, hitSound, shieldHitSound, spdrDeathSound, triShotSound, shieldUpSound, healSound;
 let gameOverScene;
 
