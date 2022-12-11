@@ -65,6 +65,27 @@ let keys = {};
 window.addEventListener("keydown", keysDown);
 window.addEventListener("keyup", keysUp);
 
+// Create game into flexbox.
+let howToPlay = document.createElement("div");
+let subheading = document.createElement("h2");
+let text = document.createElement("p");
+
+let subheadingText = document.createTextNode("How to Play:");
+let howToPlayText = `WASD - Move Player<br />Left Click - Shoot Arrow(s)<br />
+                     The player will always face the mouse.<br />Power-Ups will activate automatically.`;
+
+subheading.appendChild(subheadingText);
+text.innerHTML = howToPlayText;
+
+howToPlay.appendChild(subheading);
+howToPlay.appendChild(text);
+
+window.onload = () => {
+    document.querySelector("#game").appendChild(app.view);
+    document.querySelector("#game").appendChild(howToPlay);
+    document.querySelector("canvas").onselectstart = function () { return false; }
+}
+
 function keysDown(e){
     keys[e.keyCode] = true;
 }

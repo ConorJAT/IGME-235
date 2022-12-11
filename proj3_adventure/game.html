@@ -19,13 +19,44 @@
 
     <style>
         body{
+            margin: 0 auto;
+            background-color: rgb(49, 43, 40);
+        }
+        
+        #game{
             margin: 0;
             
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
 
             height: 100vh;
+        }
+
+        h1, h2, p{
+            font-family: Verdana, sans-serif;
+            color: #f5e8c9;
+        }
+
+        h1{
+            margin: 0;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            
+            font-size: 36px;
+        }
+
+        h2{
+            font-size: 32px;
+        }
+
+        p{
+            font-size: 20px;
+        }
+
+        canvas{
+            outline: 2px solid black;
         }
     </style>
 </head>
@@ -40,5 +71,9 @@
     <script src="js/classes.js"></script>
     <script src="js/main.js"></script>
     <script src="js/utilities.js"></script>
+
+    <div id="game">
+        <h1>The Monster Pit - Conor Race - 2221</h1>
+    </div>
 </body>
 </html>
