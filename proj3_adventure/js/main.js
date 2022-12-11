@@ -36,8 +36,8 @@ app.loader.load();
 
 // Game Variables
 let startScene;
-let gameScene, knight, triArrowCount;
-let scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, powerupLabel;  
+let gameScene, knight, triArrowCount, powerupID;
+let scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, powerupLabel, statusLabel, triArrowLabel;  
 let shootSound, hitSound, shieldHitSound, spdrDeathSound, triShotSound, shieldUpSound, healSound;
 let gameOverScene;
 
@@ -204,9 +204,36 @@ function createLabelsAndButtons(){
 
     // #2B - Add game sections.
     gameScene.addChild(new GameSection(0, 0, "game_sect1"));
+
     gameScene.addChild(new GameSection(0, 560, "game_sect2"));
     powerupLabel = new GameIcon(5, 600, "power_empty");
     gameScene.addChild(powerupLabel);
+
+    statusLabel = new PIXI.Text("");
+    statusLabel.style = new PIXI.TextStyle({
+        fill: 0xf5e8c9,
+        fontSize: 22,
+        fontFamily: 'Concert One',
+        stroke: 0xd9a41e,
+        strokeThickness: 6
+    });
+
+    statusLabel.x = 110;
+    statusLabel.y = 610;
+    gameScene.addChild(statusLabel);
+
+    triArrowLabel = new PIXI.Text("");
+    triArrowLabel.style = new PIXI.TextStyle({
+        fill: 0xf5e8c9,
+        fontSize: 16,
+        fontFamily: 'Concert One',
+        stroke: 0xd9a41e,
+        strokeThickness: 6
+    });
+
+    triArrowLabel.x = 110;
+    triArrowLabel.y = 660;
+    gameScene.addChild(triArrowLabel);
 
     // #2C - Create score label.
     scoreLabel = new PIXI.Text();
@@ -300,23 +327,24 @@ function startGame(){
     gameScene.removeChild(powerupLabel);
     powerupLabel = new GameIcon(5, 600, "power_empty");
     gameScene.addChild(powerupLabel);
+    statusLabel.text = "";
+    triArrowLabel.text = "";
 
     shielded = false;
     triShot = false;
     triArrowCount = 0;
+    powerupID = 0;
 
     levelNum = 1;
     score = 0;
     health = 100;
-    lives = 1;
+    lives = 3;
     increaseScoreBy(0);
     decreaseHealthBy(0);
     decreaseLivesBy(0);
     knight.x = 350;
     knight.y = 550;
     loadLevel();
-
-    
 }
 
 function increaseScoreBy(value){
@@ -458,6 +486,16 @@ function gameLoop(){
         // #5B - Monsters and Player
         if (m.isAlive && rectsIntersect(m, knight)){
             if(shielded){
+                if(powerupID == 2){
+                    powerupID = 0;
+
+                    gameScene.removeChild(powerupLabel);
+                    powerupLabel = new GameIcon(5, 600, "power_empty");
+                    gameScene.addChild(powerupLabel);
+
+                    statusLabel.text = "";
+                }
+                
                 shieldHitSound.play();
                 shielded = false;
 
@@ -489,9 +527,13 @@ function gameLoop(){
             
             switch(effect){
                 case 0:
+                    powerupID = 1;
                     triShot = true;
                     triArrowCount = 20;
                     triShotSound.play();
+
+                    statusLabel.text = "Triple Shot!";
+                    triArrowLabel.text = "Remaining: 20 Shot(s)"
 
                     gameScene.removeChild(powerupLabel);
                     powerupLabel = new GameIcon(5, 600, "power_tri");
@@ -499,17 +541,22 @@ function gameLoop(){
                     break;
 
                 case 1:
+                    powerupID = 2;    
                     shielded = true;
                     shieldUpSound.play();
 
+                    statusLabel.text = "Shielded!";
                     gameScene.removeChild(powerupLabel);
                     powerupLabel = new GameIcon(5, 600, "power_shield");
                     gameScene.addChild(powerupLabel);
                     break;
 
                 case 2:
+                    powerupID = 3;
                     increaseHealthBy(30);
                     healSound.play();
+
+                    statusLabel.text = "Healing!";
 
                     gameScene.removeChild(powerupLabel);
                     powerupLabel = new GameIcon(5, 600, "power_heal");
@@ -577,8 +624,21 @@ function fireArrow(e){
 
         triArrowCount--;
 
+        triArrowLabel.text = `Remaining: ${triArrowCount} Shot(s)`;
+
         if(triArrowCount == 0){
+            if(powerupID == 1){
+                powerupID = 0;
+
+                gameScene.removeChild(powerupLabel);
+                powerupLabel = new GameIcon(5, 600, "power_empty");
+                gameScene.addChild(powerupLabel);
+
+                statusLabel.text = "";
+            }
+            
             triShot = false;
+            triArrowLabel.text = "";
         }
     }
 
