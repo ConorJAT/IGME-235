@@ -21,7 +21,9 @@ app.loader.
         "images/arrow_smll.png",
         "images/powerup.png",
         "images/spider_smll.png",
-        "images/background.png"
+        "images/background.png",
+        "images/game_sect1.png",
+        "images/heart.png"
     ]);
 app.loader.onProgress.add(e => { console.log(`progress=${e.progress}`) });
 app.loader.onComplete.add(setup);
@@ -115,50 +117,50 @@ function setup() {
 
 function createLabelsAndButtons(){
     let buttonStyle = new PIXI.TextStyle({
-        fill: 0xFF0000,
-        fontSize: 38,
-        fontFamily: "Verdana"
+        fill: 0xa17b1d,
+        fontSize: 50,
+        fontFamily: 'Hanalei Fill'
     });
 
     // #1 - Set up 'startScene'.
-
+    // #1A - Add background.
     startScene.addChild(new Background());
 
-    // #1A - Create start top label.
+    // #1B - Create start top label.
     let startLabel1 = new PIXI.Text("The Monster Pit");
     startLabel1.style = new PIXI.TextStyle({
-        fill: 0xFFFFFF,
-        fontSize: 82,
-        fontFamily: "Verdana",
-        stroke: 0xFF0000,
+        fill: 0xf5e8c9,
+        fontSize: 76,
+        fontFamily: 'Hanalei Fill',
+        stroke: 0xd9a41e,
         strokeThickness: 6
     });
 
-    startLabel1.x = 50;
+    startLabel1.x = 90;
     startLabel1.y = 120;
     startScene.addChild(startLabel1);
 
-    // #1B - Create start middle label.
-    let startLabel2 = new PIXI.Text("How long will you last?");
+    // #1C - Create start middle label.
+    let startLabel2 = new PIXI.Text("How long will you survive?");
     startLabel2.style = new PIXI.TextStyle({
-        fill: 0xFFFFFF,
-        fontSize: 32,
-        fontFamily: "Verdana",
+        fill: 0xf5e8c9,
+        fontSize: 28,
+        fontFamily: 'Hanalei Fill',
         fontStyle: "italic",
-        stroke: 0xFF0000,
+        stroke: 0xd9a41e,
         strokeThickness: 6
     });
 
-    startLabel2.x = 185;
-    startLabel2.y = 300;
+    startLabel2.x = 182;
+    startLabel2.y = 260;
     startScene.addChild(startLabel2);
 
-    // #1C - Create start game button.
+    // #1D - Create start game button.
     let startButton = new PIXI.Text("Begin Journey");
     startButton.style = buttonStyle;
 
-    startButton.x = 80;
-    startButton.y = sceneHeight - 100;
+    startButton.x = 198;
+    startButton.y = sceneHeight - 180;
 
     startButton.interactive = true;
     startButton.buttonMode = true;
@@ -172,16 +174,20 @@ function createLabelsAndButtons(){
 
     // #2 - Set up 'gameScene'.
     let textStyle = new PIXI.TextStyle({
-        fill: 0xFFFFFF,
-        fontSize: 18,
-        fontFamily: "Verdana",
-        stroke: 0xFF0000,
+        fill: 0xf5e8c9,
+        fontSize: 28,
+        fontFamily: "Concert One",
+        stroke: 0xd9a41e,
         strokeThickness: 4
     });
 
+    // #2A - Add background.
     gameScene.addChild(new Background());
 
-    // #2A - Create score label.
+    // #2B - Add game sections.
+    gameScene.addChild(new GameSection(0, 0, "game_sect1"));
+
+    // #2C - Create score label.
     scoreLabel = new PIXI.Text();
     scoreLabel.style = textStyle;
 
@@ -191,52 +197,69 @@ function createLabelsAndButtons(){
     gameScene.addChild(scoreLabel);
     increaseScoreBy(0);
 
-    // #2B - Create health label.
+    // #2D - Create health label.
     healthLabel = new PIXI.Text();
     healthLabel.style = textStyle;
 
     healthLabel.x = 5;
-    healthLabel.y = 26;
+    healthLabel.y = 35;
 
     gameScene.addChild(healthLabel);
     decreaseHealthBy(0);
 
-    // #2C - Create lives label.
+    // #2E - Create lives label.
     livesLabel = new PIXI.Text();
     livesLabel.style = textStyle;
 
     livesLabel.x = 5
-    livesLabel.y = 47;
+    livesLabel.y = 65;
 
     gameScene.addChild(livesLabel);
     decreaseLivesBy(0);
 
+    gameScene.addChild(new GameIcon(124, 70, "heart"))
+
 
     // #3 - Set up `gameOverScene`.
-
+    // #3A - Add background.
     gameOverScene.addChild(new Background());
 
-    // #3A - Make game over text.
-    let gameOverText = new PIXI.Text("Game Over!\n      :-O");
+    // #3B - Make game over text.
+    let gameOverText = new PIXI.Text("~You have been slain!~");
     textStyle = new PIXI.TextStyle({
-	    fill: 0xFFFFFF,
-	    fontSize: 64,
-	    fontFamily: "Verdana",
-	    stroke: 0xFF0000,
+	    fill: 0xf5e8c9,
+	    fontSize: 56,
+	    fontFamily: 'Hanalei Fill',
+	    stroke: 0xd9a41e,
 	    strokeThickness: 6
     });
     gameOverText.style = textStyle;
 
-    gameOverText.x = 100;
-    gameOverText.y = sceneHeight/2 - 160;
+    gameOverText.x = 78;
+    gameOverText.y = 120;
     gameOverScene.addChild(gameOverText);
 
-    // #3B - Make "Play Again?" button.
+    // #3C - Make "Final Score" label.
+    gameOverScoreLabel = new PIXI.Text(`Your final score: ${score}`);
+    textStyle = new PIXI.TextStyle({
+	    fill: 0xf5e8c9,
+	    fontSize: 32,
+	    fontFamily: 'Hanalei Fill',
+	    stroke: 0xd9a41e,
+	    strokeThickness: 6
+    });
+    gameOverScoreLabel.style = textStyle;
+
+    gameOverScoreLabel.x = 220;
+    gameOverScoreLabel.y = 260;
+    gameOverScene.addChild(gameOverScoreLabel);
+
+    // #3D - Make "Play Again?" button.
     let playAgainButton = new PIXI.Text("Play Again?");
     playAgainButton.style = buttonStyle;
 
-    playAgainButton.x = 180;
-    playAgainButton.y = sceneHeight - 100;
+    playAgainButton.x = 232;
+    playAgainButton.y = sceneHeight - 180;
 
     playAgainButton.interactive = true;
     playAgainButton.buttonMode = true;
@@ -245,22 +268,7 @@ function createLabelsAndButtons(){
     playAgainButton.on('pointerover',e=>e.target.alpha = 0.7);       // Concise arrow function w/ no brackets.
     playAgainButton.on('pointerout',e=>e.currentTarget.alpha = 1.0); // Same as above.
 
-    gameOverScene.addChild(playAgainButton);
-
-    // #3C - Make "Final Score" label.
-    gameOverScoreLabel = new PIXI.Text(`Your final score: ${score}`);
-    textStyle = new PIXI.TextStyle({
-	    fill: 0xFFFFFF,
-	    fontSize: 32,
-	    fontFamily: "Verdana",
-	    stroke: 0xFF0000,
-	    strokeThickness: 6
-    });
-    gameOverScoreLabel.style = textStyle;
-
-    gameOverScoreLabel.x = 130;
-    gameOverScoreLabel.y = 350;
-    gameOverScene.addChild(gameOverScoreLabel);
+    gameOverScene.addChild(playAgainButton); 
 }
 
 function startGame(){
@@ -315,7 +323,7 @@ function increaseHealthBy(value){
 function decreaseLivesBy(value){
     lives -= value;
     lives = parseInt(lives);
-    livesLabel.text = `Lives: ${lives}`;
+    livesLabel.text = `Lives: ${lives} x`;
 }
 
 function gameLoop(){
@@ -465,7 +473,7 @@ function gameLoop(){
             }
         }
 
-        if(p.y >= 740) a.isAlive = false;
+        if(p.y >= 740) p.isAlive = false;
     }
 	
 
