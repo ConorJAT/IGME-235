@@ -1,3 +1,4 @@
+// The main character the player controls.
 class Knight extends PIXI.Sprite{
     constructor(x = 0, y = 0, shielded = false){
         if (shielded){
@@ -13,10 +14,10 @@ class Knight extends PIXI.Sprite{
         this.y = y;
     }
 
+    // Player always faces the mouse cursor.
     faceMouse(mouseX, mouseY){
         let toMouseX = mouseX - this.x;
         let toMouseY = mouseY - this.y;
-        
 
         if (toMouseY >= 0 && toMouseX >= 0){
             this.rotation = Math.atan(toMouseY/toMouseX) - (Math.PI / 2);
@@ -36,6 +37,7 @@ class Knight extends PIXI.Sprite{
     }
 }
 
+// Arrow projectiles shot by the player.
 class Arrow extends PIXI.Sprite{
     constructor(x = 0, y = 0, rotate = 0){
         super(app.loader.resources["images/arrow_smll.png"].texture);
@@ -56,6 +58,7 @@ class Arrow extends PIXI.Sprite{
     }
 }
 
+// Monster enemies the player must defeat to proceed.
 class Monster extends PIXI.Sprite{
     constructor(radius, x = 0, y = 0){
         super(app.loader.resources["images/spider_smll.png"].texture);
@@ -84,6 +87,7 @@ class Monster extends PIXI.Sprite{
     }
 }
 
+// Power-Ups the player can collect for an in-game advantage.
 class PowerUp extends PIXI.Sprite{
     constructor(x = 0, y = 0){
         super(app.loader.resources["images/powerup.png"].texture);
@@ -103,12 +107,14 @@ class PowerUp extends PIXI.Sprite{
     }
 }
 
+// Generates a background image for the game.
 class Background extends PIXI.Sprite{
     constructor(x = 0, y = 0){
         super(app.loader.resources["images/background.png"].texture);
     }
 }
 
+// Creates sections for in-game content to be stored in.
 class GameSection extends PIXI.Sprite{
     constructor(x = 0, y = 0, section){
         super(app.loader.resources[`images/${section}.png`].texture);
@@ -118,6 +124,7 @@ class GameSection extends PIXI.Sprite{
     }
 }
 
+// Used to display any other images/sprite in-game.
 class GameIcon extends PIXI.Sprite{
     constructor(x = 0, y = 0, image){
         super(app.loader.resources[`images/${image}.png`].texture);

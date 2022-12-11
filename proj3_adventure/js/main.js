@@ -37,13 +37,19 @@ app.loader.load();
 // Game Variables
 let startScene;
 let gameScene, knight, triArrowCount, powerupID;
-let scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, powerupLabel, statusLabel, triArrowLabel;  
-let shootSound, hitSound, shieldHitSound, spdrDeathSound, triShotSound, shieldUpSound, healSound;
 let gameOverScene;
 
+// Labels
+let scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, powerupLabel, statusLabel, triArrowLabel;
+
+// Audio
+let shootSound, hitSound, shieldHitSound, spdrDeathSound, triShotSound, shieldUpSound, healSound;
+
+// Arrays
 let monsters = [];
 let arrows = [];
 let powerups = [];
+
 let score = 0;
 let health = 100;
 let lives = 3;
@@ -119,18 +125,12 @@ function setup() {
     triShotSound = new Howl({
         src: ['audio/power_tri.mp3']
     })
-	
-	// #7 - Load sprite sheet
-    
 		
-	// #8 - Start update loop
+	// #7 - Start update loop
     app.ticker.add(gameLoop);
 	
-	// #9 - Start listening for click events on the canvas
+	// #8 - Start listening for click events on the canvas
     app.view.onclick = fireArrow;
-	
-	// Now our `startScene` is visible
-	// Clicking the button calls startGame()
 }
 
 function createLabelsAndButtons(){
@@ -209,6 +209,7 @@ function createLabelsAndButtons(){
     powerupLabel = new GameIcon(5, 600, "power_empty");
     gameScene.addChild(powerupLabel);
 
+    // #2C - Add label for power-up status.
     statusLabel = new PIXI.Text("");
     statusLabel.style = new PIXI.TextStyle({
         fill: 0xf5e8c9,
@@ -222,6 +223,7 @@ function createLabelsAndButtons(){
     statusLabel.y = 610;
     gameScene.addChild(statusLabel);
 
+    // #2D - Add label for tri arrow count.
     triArrowLabel = new PIXI.Text("");
     triArrowLabel.style = new PIXI.TextStyle({
         fill: 0xf5e8c9,
@@ -235,7 +237,7 @@ function createLabelsAndButtons(){
     triArrowLabel.y = 660;
     gameScene.addChild(triArrowLabel);
 
-    // #2C - Create score label.
+    // #2E - Create score label.
     scoreLabel = new PIXI.Text();
     scoreLabel.style = textStyle;
 
@@ -245,7 +247,7 @@ function createLabelsAndButtons(){
     gameScene.addChild(scoreLabel);
     increaseScoreBy(0);
 
-    // #2D - Create health label.
+    // #2F - Create health label.
     healthLabel = new PIXI.Text();
     healthLabel.style = textStyle;
 
@@ -255,7 +257,7 @@ function createLabelsAndButtons(){
     gameScene.addChild(healthLabel);
     decreaseHealthBy(0);
 
-    // #2E - Create lives label.
+    // #2G - Create lives label.
     livesLabel = new PIXI.Text();
     livesLabel.style = textStyle;
 
@@ -324,6 +326,7 @@ function startGame(){
     gameOverScene.visible = false;
     gameScene.visible = true;
 
+    // Reset all power-up related code.
     gameScene.removeChild(powerupLabel);
     powerupLabel = new GameIcon(5, 600, "power_empty");
     gameScene.addChild(powerupLabel);
@@ -335,6 +338,7 @@ function startGame(){
     triArrowCount = 0;
     powerupID = 0;
 
+    // Reset general player stats.
     levelNum = 1;
     score = 0;
     health = 100;
@@ -393,19 +397,23 @@ function gameLoop(){
     if (dt > 1/12) dt=1/12;
 	
 
+    // #2 - Generate power-ups (RNG).
     if(powerups.length < 2){
         if(Math.random() * 10000 <= 10){
             createPowerUp();
         }
     }
 
+
+    // #3 - Change player sprite if shielded.
 	if (shielded){
         gameScene.removeChild(knight);
         knight = new Knight(knight.x, knight.y, true);
         gameScene.addChild(knight);
     }
     
-    // #2 - Move Player.
+
+    // #4 - Move player.
     let mousePosition = app.renderer.plugins.interaction.mouse.global;
 
     let amt = dt * 6;   // At 60 FPS, would move 10% of distance per update.
@@ -414,22 +422,22 @@ function gameLoop(){
     knight.faceMouse(mousePosition.x, mousePosition.y);
 
     // Player Movement
-    // W
+    // W Key
     if (keys["87"]){
         knight.y -= 3;
     }
 
-    // A
+    // A Key
     if (keys["65"]){
         knight.x -= 3;
     }
 
-    // S
+    // S Key
     if (keys["83"]){
         knight.y += 3;
     }
 
-    // D
+    // D Key
     if (keys["68"]){
         knight.x += 3;
     }
@@ -441,34 +449,38 @@ function gameLoop(){
     knight.y = clamp(knight.y, 0 + h2, sceneHeight - h2);
 
 
-	// #3 - Move Enemies.
-	for (let c of monsters){
-        c.move(dt);
-        if (c.x <= c.radius || c.x >= sceneWidth - c.radius){
-            c.reflectX();
-            c.move(dt);
+	// #5 - Move monsters.
+	for (let m of monsters){
+        m.move(dt);
+        if (m.x <= m.radius || m.x >= sceneWidth - m.radius){
+            m.reflectX();
+            m.move(dt);
         }
 
-        if (c.y <= c.radius || c.y >= sceneHeight - c.radius){
-            c.reflectY();
-            c.move(dt);
+        if (m.y <= m.radius || m.y >= sceneHeight - m.radius){
+            m.reflectY();
+            m.move(dt);
         }
     }
 
-    // #4 - Move Arrows
+
+    // #6 - Move arrows.
     for (let a of arrows){
 		a.move(dt);
 	}
 
+
+    // #7 - Move power-ups.
     for (let p of powerups){
         p.move(dt);
     }
 
-    // #5 - Check for Collisions.
+
+    // #8 - Check for collisions.
     for (let m of monsters){
         for (let a of arrows){
 
-            // #5A - Monsters and Arrows
+            // #8A - Monsters and Arrows
             if (rectsIntersect(a,m)){
                 spdrDeathSound.play();
 
@@ -480,13 +492,14 @@ function gameLoop(){
                 increaseScoreBy(10);
             }
 
+            // Remove arrows that are out of bounds.
             if(a.y < -20 || a.y > 740 || a.x < -20 || a.x > 740) a.isAlive = false;
         }
 
-        // #5B - Monsters and Player
+        // #8B - Monsters and Player.
         if (m.isAlive && rectsIntersect(m, knight)){
-            if(shielded){
-                if(powerupID == 2){
+            if(shielded){       // Checks if player is shielded.
+                if(powerupID == 2){     // Used to swap power-up icon when necessary.
                     powerupID = 0;
 
                     gameScene.removeChild(powerupLabel);
@@ -499,6 +512,7 @@ function gameLoop(){
                 shieldHitSound.play();
                 shielded = false;
 
+                // Revert player back to original sprite.
                 gameScene.removeChild(knight);
                 knight = new Knight(knight.x, knight.y);
                 gameScene.addChild(knight);
@@ -514,7 +528,7 @@ function gameLoop(){
         }
     }
 
-    // #5C - Power-Ups and Player
+    // #8C - Power-Ups and Player.
     for (let p of powerups){
 
         if (rectsIntersect(p, knight)){
@@ -522,11 +536,11 @@ function gameLoop(){
             p.isAlive = false;
             increaseScoreBy(25);
 
+            // Effect of eah power-up is randomized.
             let effect = Math.floor(Math.random() * 3);
 
-            
             switch(effect){
-                case 0:
+                case 0:     // Tri Arrow Effect
                     powerupID = 1;
                     triShot = true;
                     triArrowCount = 20;
@@ -540,7 +554,7 @@ function gameLoop(){
                     gameScene.addChild(powerupLabel);
                     break;
 
-                case 1:
+                case 1:     // Shield Effect
                     powerupID = 2;    
                     shielded = true;
                     shieldUpSound.play();
@@ -551,7 +565,7 @@ function gameLoop(){
                     gameScene.addChild(powerupLabel);
                     break;
 
-                case 2:
+                case 2:     // Healing Effect
                     powerupID = 3;
                     increaseHealthBy(30);
                     healSound.play();
@@ -565,11 +579,12 @@ function gameLoop(){
             }
         }
 
+        // Remove power-ups that are out of bounds.
         if(p.y >= 740) p.isAlive = false;
     }
 	
 
-	// #6 - Now do some clean up.
+	// #9 - Now do some clean up.
     // Remove dead arrows.
     arrows = arrows.filter(a=>a.isAlive);
 
@@ -580,13 +595,13 @@ function gameLoop(){
     powerups = powerups.filter(p=>p.isAlive);
 
 
-    // #7 - Is game over?
+    // #10 - Is game over?
     if (lives <= 0){
         end();
         return;     // Return here so we skip #8 below.
     }
 
-    // #8 - Load next level
+    // #11 - Load next level
     if (monsters.length == 0){
         levelNum++;
         loadLevel();
@@ -613,7 +628,7 @@ function end(){
 function fireArrow(e){
     if (paused) return;
 
-    if (triShot){
+    if (triShot){       // Checks if the player currently has tri shot active.
         let aLeft = new Arrow(knight.x, knight.y, (knight.rotation - (Math.PI/12)));
         arrows.push(aLeft);
         gameScene.addChild(aLeft);
@@ -624,10 +639,11 @@ function fireArrow(e){
 
         triArrowCount--;
 
+        // Using tri shot, print how many shots are left.
         triArrowLabel.text = `Remaining: ${triArrowCount} Shot(s)`;
 
         if(triArrowCount == 0){
-            if(powerupID == 1){
+            if(powerupID == 1){     // Used to swap power-up icon when necessary.
                 powerupID = 0;
 
                 gameScene.removeChild(powerupLabel);
@@ -650,11 +666,11 @@ function fireArrow(e){
 
 function createMonsters(numMonsters){
     for (let i = 0; i < numMonsters; i++){
-        let c = new Monster(10, 0xFFFF00);
-        c.x = Math.random() * (sceneWidth - 150) + 25;
-        c.y = Math.random() * (sceneHeight - 500) + 25;
-        monsters.push(c);
-        gameScene.addChild(c);
+        let m = new Monster(10, 0xFFFF00);
+        m.x = Math.random() * (sceneWidth - 150) + 25;
+        m.y = Math.random() * (sceneHeight - 500) + 25;
+        monsters.push(m);
+        gameScene.addChild(m);
     }
 }
 
