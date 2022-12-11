@@ -23,6 +23,11 @@ app.loader.
         "images/spider_smll.png",
         "images/background.png",
         "images/game_sect1.png",
+        "images/game_sect2.png",
+        "images/power_empty.png",
+        "images/power_heal.png",
+        "images/power_tri.png",
+        "images/power_shield.png",
         "images/heart.png"
     ]);
 app.loader.onProgress.add(e => { console.log(`progress=${e.progress}`) });
@@ -31,8 +36,8 @@ app.loader.load();
 
 // Game Variables
 let startScene;
-let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel; 
-let shootSound, hitSound, shieldHitSound, spdrDeathSound;
+let gameScene, knight, scoreLabel, gameOverScoreLabel, healthLabel, livesLabel, powerupLabel, triArrowCount; 
+let shootSound, hitSound, shieldHitSound, spdrDeathSound, triShotSound, shieldUpSound, healSound;
 let gameOverScene;
 
 let monsters = [];
@@ -100,6 +105,18 @@ function setup() {
 
     shieldHitSound = new Howl({
         src: ['audio/shield_hit.mp3']
+    })
+
+    shieldUpSound = new Howl({
+        src: ['audio/power_shield.mp3']
+    })
+
+    healSound = new Howl({
+        src: ['audio/power_heal.mp3']
+    })
+
+    triShotSound = new Howl({
+        src: ['audio/power_tri.mp3']
     })
 	
 	// #7 - Load sprite sheet
@@ -186,6 +203,9 @@ function createLabelsAndButtons(){
 
     // #2B - Add game sections.
     gameScene.addChild(new GameSection(0, 0, "game_sect1"));
+    gameScene.addChild(new GameSection(0, 560, "game_sect2"));
+    powerupLabel = new GameIcon(5, 600, "power_empty");
+    gameScene.addChild(powerupLabel);
 
     // #2C - Create score label.
     scoreLabel = new PIXI.Text();
@@ -276,6 +296,14 @@ function startGame(){
     gameOverScene.visible = false;
     gameScene.visible = true;
 
+    gameScene.removeChild(powerupLabel);
+    powerupLabel = new GameIcon(5, 600, "power_empty");
+    gameScene.addChild(powerupLabel);
+
+    shielded = false;
+    triShot = false;
+    triArrowCount = 0;
+
     levelNum = 1;
     score = 0;
     health = 100;
@@ -286,6 +314,8 @@ function startGame(){
     knight.x = 350;
     knight.y = 550;
     loadLevel();
+
+    
 }
 
 function increaseScoreBy(value){
@@ -424,8 +454,6 @@ function gameLoop(){
             if(a.y < -20 || a.y > 740 || a.x < -20 || a.x > 740) a.isAlive = false;
         }
 
-        
-
         // #5B - Monsters and Player
         if (m.isAlive && rectsIntersect(m, knight)){
             if(shielded){
@@ -461,14 +489,30 @@ function gameLoop(){
             switch(effect){
                 case 0:
                     triShot = true;
+                    triArrowCount = 20;
+                    triShotSound.play();
+
+                    gameScene.removeChild(powerupLabel);
+                    powerupLabel = new GameIcon(5, 600, "power_tri");
+                    gameScene.addChild(powerupLabel);
                     break;
 
                 case 1:
                     shielded = true;
+                    shieldUpSound.play();
+
+                    gameScene.removeChild(powerupLabel);
+                    powerupLabel = new GameIcon(5, 600, "power_shield");
+                    gameScene.addChild(powerupLabel);
                     break;
 
                 case 2:
                     increaseHealthBy(30);
+                    healSound.play();
+
+                    gameScene.removeChild(powerupLabel);
+                    powerupLabel = new GameIcon(5, 600, "power_heal");
+                    gameScene.addChild(powerupLabel);
                     break;
             }
         }
@@ -529,6 +573,12 @@ function fireArrow(e){
         let aRight = new Arrow(knight.x, knight.y, (knight.rotation + (Math.PI/12)));
         arrows.push(aRight);
         gameScene.addChild(aRight);
+
+        triArrowCount--;
+
+        if(triArrowCount == 0){
+            triShot = false;
+        }
     }
 
     let b = new Arrow(knight.x, knight.y, knight.rotation);

@@ -112,13 +112,16 @@ class Background extends PIXI.Sprite{
 class GameSection extends PIXI.Sprite{
     constructor(x = 0, y = 0, section){
         super(app.loader.resources[`images/${section}.png`].texture);
+
+        this.x = x;
+        this.y = y;
     }
 }
 
 class GameIcon extends PIXI.Sprite{
     constructor(x = 0, y = 0, image){
         super(app.loader.resources[`images/${image}.png`].texture);
-        
+
         this.x = x;
         this.y = y;
     }
